@@ -2,19 +2,37 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Home – Abrigo</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="page-home">
 
 <header>
-    <button onclick="irPerfil()" class="perfil-btn">Perfil</button>
+    <span id="saudacao"></span>
+    <div>
+        <button id="btnCadastrarAnimal" class="hidden" onclick="window.location.href='cadastrar-animal.html'">+ Cadastrar Animal</button>
+        <button class="perfil-btn" onclick="window.location.href='perfil.html'">Perfil</button>
+    </div>
 </header>
 
-<main class="center">
-    <h1>TESTE</h1>
+<main>
+    <h1>Animais disponíveis para adoção</h1>
+
+    <div class="filtros">
+        <select id="filtroEspecie">
+            <option value="">Todas as espécies</option>
+            <option value="cao">Cachorro</option>
+            <option value="gato">Gato</option>
+            <option value="outro">Outro</option>
+        </select>
+        <button onclick="carregarAnimais()">Filtrar</button>
+    </div>
+
+    <div id="listaAnimais" class="lista-animais">
+        <p>Carregando...</p>
+    </div>
 </main>
 
-<script src="js/home.js"></script>
+<script src="../js/home.js"></script>
 </body>
 </html>

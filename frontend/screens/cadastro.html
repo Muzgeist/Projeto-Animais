@@ -2,13 +2,15 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Cadastro – Abrigo</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <div class="container">
     <h2>Cadastro</h2>
+    <p id="erroCadastro" class="erro hidden"></p>
+    <p id="sucessoCadastro" class="sucesso hidden"></p>
 
     <label>Você é:</label>
     <select id="tipoUsuario">
@@ -18,16 +20,19 @@
     </select>
 
     <div id="camposCadastro" class="hidden">
-        <input type="text" placeholder="Nome">
-        <input type="email" placeholder="Email">
-        <input type="text" placeholder="Endereço">
-        <input type="text" placeholder="Telefone" id="telefone">
-        <input type="password" placeholder="Senha">
-
-        <button>Cadastrar</button>
+        <input type="text"     placeholder="Nome"     id="cadNome">
+        <input type="email"    placeholder="Email"    id="cadEmail">
+        <input type="text"     placeholder="Endereço" id="cadEndereco">
+        <input type="text"     placeholder="Telefone (somente números)" id="cadTelefone" maxlength="11">
+        <input type="password" placeholder="Senha"    id="cadSenha">
+        <button id="btnCadastrar">Cadastrar</button>
     </div>
+
+    <p class="cadastro-texto">
+        Já tem conta? <a href="index.html" class="btn-cadastro">Faça login</a>
+    </p>
 </div>
 
-<script src="script.js"></script>
+<script src="../js/cadastro.js"></script>
 </body>
 </html>

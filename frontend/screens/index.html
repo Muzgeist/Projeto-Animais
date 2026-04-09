@@ -2,18 +2,19 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Login – Abrigo</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <div class="container">
     <h2>Login</h2>
+    <p id="erroLogin" class="erro hidden"></p>
 
     <input type="email" placeholder="Email" id="loginEmail">
     <input type="password" placeholder="Senha" id="loginSenha">
 
-    <button>Entrar</button>
+    <button id="btnLogin">Entrar</button>
 
     <p class="cadastro-texto">
         Não possui uma conta?
@@ -21,5 +22,6 @@
     </p>
 </div>
 
+<script src="../js/login.js"></script>
 </body>
 </html>
