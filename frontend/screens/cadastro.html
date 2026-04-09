@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Cadastro</h2>
+
+    <label>Você é:</label>
+    <select id="tipoUsuario">
+        <option value="">Selecione</option>
+        <option value="ong">ONG</option>
+        <option value="adotante">Adotante</option>
+    </select>
+
+    <div id="camposCadastro" class="hidden">
+        <input type="text" placeholder="Nome">
+        <input type="email" placeholder="Email">
+        <input type="text" placeholder="Endereço">
+        <input type="text" placeholder="Telefone" id="telefone">
+        <input type="password" placeholder="Senha">
+
+        <button>Cadastrar</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
