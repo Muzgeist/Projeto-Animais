@@ -17,7 +17,7 @@ router.post('/', autenticar, async (req, res) => {
 
     try {
         // Verifica se já existe interesse pendente/aprovado deste usuário para este animal
-        const [existente] = await db.query(
+        const [existente] = await db.promise().query(
             "SELECT id FROM interesses WHERE usuario_id = ? AND animal_id = ? AND status != 'recusado'",
             [usuario_id, animal_id]
         );
@@ -25,13 +25,13 @@ router.post('/', autenticar, async (req, res) => {
             return res.status(409).json({ erro: 'Você já demonstrou interesse neste animal.' });
         }
 
-        await db.query(
+        await db.promise().query(
             'INSERT INTO interesses (usuario_id, animal_id) VALUES (?, ?)',
             [usuario_id, animal_id]
         );
 
         // Muda status do animal para em_processo
-        await db.query(
+        await db.promise().query(
             "UPDATE animais SET status = 'em_processo' WHERE id = ?",
             [animal_id]
         );

@@ -17,7 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // ==========================
 async function carregarUsuario() {
     try {
-        const res = await fetch(`${API_URL}/perfil`);
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        const res = await fetch(`${API_URL}/perfil`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) return;
         const user = await res.json();
 
         document.getElementById("boasVindas").innerText =

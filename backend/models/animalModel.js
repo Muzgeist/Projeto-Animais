@@ -26,12 +26,12 @@ const AnimalModel = {
 
     query += ' ORDER BY a.criado_em DESC';
 
-    const [rows] = await db.query(query, params);
+    const [rows] = await db.promise().query(query, params);
     return rows.map(calcularFaixaEtaria);
   },
 
   async findById(id) {
-    const [rows] = await db.query(
+    const [rows] = await db.promise().query(
       `SELECT a.*, u.nome AS ong_nome,
         TIMESTAMPDIFF(MONTH, a.data_nascimento, CURDATE()) AS idade_meses
        FROM animais a
@@ -43,7 +43,7 @@ const AnimalModel = {
   },
 
   async create({ nome, especie, raca, data_nascimento, descricao, ong_id }) {
-    const [result] = await db.query(
+    const [result] = await db.promise().query(
       'INSERT INTO animais (nome, especie, raca, data_nascimento, descricao, ong_id) VALUES (?, ?, ?, ?, ?, ?)',
       [nome, especie, raca || null, data_nascimento || null, descricao || null, ong_id]
     );
@@ -51,7 +51,7 @@ const AnimalModel = {
   },
 
   async updateStatus(id, status) {
-    await db.query('UPDATE animais SET status = ? WHERE id = ?', [status, id]);
+    await db.promise().query('UPDATE animais SET status = ? WHERE id = ?', [status, id]);
   },
 };
 
