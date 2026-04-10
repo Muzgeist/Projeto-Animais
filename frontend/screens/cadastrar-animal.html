@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Animal – Abrigo</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header>
+    <span id="saudacao"></span>
+    <button class="perfil-btn" onclick="window.location.href='home.html'">← Voltar</button>
+</header>
+
+<main class="form-main">
+    <div class="form-card">
+        <h2>Cadastrar animal</h2>
+
+        <p id="erroGeral" class="erro hidden"></p>
+        <p id="sucesso"   class="sucesso hidden"></p>
+
+        <div class="field">
+            <label for="nome">Nome <span class="req">*</span></label>
+            <input type="text" id="nome" placeholder="Ex: Bolinha">
+            <p class="erro-campo hidden" id="erro-nome">Informe o nome do animal.</p>
+        </div>
+
+        <div class="field">
+            <label for="especie">Espécie <span class="req">*</span></label>
+            <select id="especie">
+                <option value="">Selecione</option>
+                <option value="cao">Cachorro</option>
+                <option value="gato">Gato</option>
+                <option value="ave">Ave</option>
+                <option value="roedor">Roedor</option>
+                <option value="reptil">Réptil</option>
+                <option value="outro">Outro</option>
+            </select>
+            <p class="erro-campo hidden" id="erro-especie">Selecione a espécie.</p>
+        </div>
+
+        <div class="field">
+            <label for="raca">Raça</label>
+            <input type="text" id="raca" placeholder="Ex: Labrador, SRD (sem raça definida)">
+        </div>
+
+        <div class="field">
+            <label for="dataNasc">Data de nascimento</label>
+            <input type="date" id="dataNasc">
+        </div>
+
+        <hr class="divider">
+
+        <div class="field">
+            <label>Possui alguma enfermidade ou deficiência física? <span class="req">*</span></label>
+            <div class="radio-group">
+                <button type="button" class="radio-opt" id="opt-sim" onclick="selecionarEnfermidade('sim')">Sim</button>
+                <button type="button" class="radio-opt" id="opt-nao" onclick="selecionarEnfermidade('nao')">Não</button>
+            </div>
+            <p class="erro-campo hidden" id="erro-enfermidade">Selecione uma opção.</p>
+
+            <div class="campo-enfermidade hidden" id="campo-enfermidade">
+                <label for="descEnfermidade">
+                    Qual enfermidade ou deficiência?
+                    <span class="badge-obrig">obrigatório</span>
+                </label>
+                <textarea id="descEnfermidade" placeholder="Descreva a condição do animal..."></textarea>
+                <p class="erro-campo hidden" id="erro-desc-enfermidade">Descreva a enfermidade ou deficiência.</p>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <div class="field">
+            <label for="descricao">Descrição <span class="req">*</span></label>
+            <textarea id="descricao" placeholder="Conte um pouco sobre o animal: personalidade, comportamento, se dá bem com crianças ou outros pets..."></textarea>
+            <p class="erro-campo hidden" id="erro-descricao">Escreva uma descrição sobre o animal.</p>
+        </div>
+
+        <button id="btnCadastrar">Cadastrar animal</button>
+    </div>
+</main>
+
+<script src="../js/cadastrar-animal.js"></script>
+</body>
+</html>

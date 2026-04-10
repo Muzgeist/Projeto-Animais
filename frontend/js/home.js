@@ -1,49 +1,146 @@
-const API = 'http://localhost:3000/api';
+const API_URL = "http://localhost:3000/api";
 
-function irPerfil() { window.location.href = 'perfil.html'; }
+// estado global simples
+let animais = [];
+let filtroAtual = "todos";
 
-function getToken() { return localStorage.getItem('token'); }
+// ==========================
+// INIT
+// ==========================
+document.addEventListener("DOMContentLoaded", () => {
+    carregarUsuario();
+    carregarAnimais();
+});
 
-// Redireciona se não autenticado
-if (!getToken()) window.location.href = 'index.html';
+// ==========================
+// USUÁRIO
+// ==========================
+async function carregarUsuario() {
+    try {
+        const res = await fetch(`${API_URL}/perfil`);
+        const user = await res.json();
 
-// Saudação e botão ONG
-const nome = localStorage.getItem('nome');
-const tipo = localStorage.getItem('tipo');
-document.getElementById('saudacao').textContent = `Olá, ${nome}!`;
-if (tipo === 'ong') {
-  document.getElementById('btnCadastrarAnimal').classList.remove('hidden');
+        document.getElementById("boasVindas").innerText =
+            `Bem vindo de volta, ${user.nome}`;
+
+    } catch (err) {
+        console.error("Erro ao carregar usuário:", err);
+    }
 }
 
+// ==========================
+// ANIMAIS
+// ==========================
 async function carregarAnimais() {
-  const especie = document.getElementById('filtroEspecie').value;
-  const lista   = document.getElementById('listaAnimais');
-  lista.innerHTML = '<p>Carregando...</p>';
+    try {
+        const res = await fetch(`${API_URL}/animais`);
+        animais = await res.json();
 
-  try {
-    let url = `${API}/animais?status=disponivel`;
-    if (especie) url += `&especie=${especie}`;
+        renderizar();
 
-    const res    = await fetch(url);
-    const animais = await res.json();
+    } catch (err) {
+        console.error("Erro ao carregar animais:", err);
+    }
+}
 
-    if (!animais.length) {
-      lista.innerHTML = '<p>Nenhum animal disponível no momento.</p>';
-      return;
+// ==========================
+// FILTRO
+// ==========================
+function filtrar(tipo) {
+    filtroAtual = tipo;
+    renderizar();
+}
+
+// ==========================
+// CLASSIFICAÇÃO POR IDADE
+// ==========================
+function classificarIdade(dataNascimento) {
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+
+    const idadeMeses = (hoje - nascimento) / (1000 * 60 * 60 * 24 * 30);
+    const idadeAnos = idadeMeses / 12;
+
+    if (idadeMeses <= 12) return "filhote";
+    if (idadeAnos <= 8) return "adulto";
+    return "idoso";
+}
+
+// ==========================
+// FILTRO DE ESPÉCIE
+// ==========================
+function aplicarFiltro(lista) {
+    if (filtroAtual === "todos") return lista;
+
+    return lista.filter(a => {
+        if (!a.especie) return false;
+
+        const especie = a.especie.toLowerCase();
+
+        if (filtroAtual === "outros") {
+            return especie !== "cachorro" && especie !== "gato";
+        }
+
+        return especie === filtroAtual;
+    });
+}
+
+// ==========================
+// RENDERIZAÇÃO
+// ==========================
+function renderizar() {
+    const filtrados = aplicarFiltro(animais);
+
+    const filhotes = [];
+    const adultos = [];
+    const idosos = [];
+
+    filtrados.forEach(animal => {
+        const tipo = classificarIdade(animal.data_nascimento);
+
+        if (tipo === "filhote") filhotes.push(animal);
+        else if (tipo === "adulto") adultos.push(animal);
+        else idosos.push(animal);
+    });
+
+    renderCarrossel("filhotes", filhotes);
+    renderCarrossel("adultos", adultos);
+    renderCarrossel("idosos", idosos);
+}
+
+// ==========================
+// CARDS
+// ==========================
+function renderCarrossel(id, lista) {
+    const container = document.getElementById(id);
+    container.innerHTML = "";
+
+    if (lista.length === 0) {
+        container.innerHTML = "<p>Nenhum animal encontrado</p>";
+        return;
     }
 
-    lista.innerHTML = animais.map(a => `
-      <div class="card-animal" onclick="window.location.href='animal.html?id=${a.id}'">
-        <h3>${a.nome}</h3>
-        <p><strong>Espécie:</strong> ${a.especie}</p>
-        ${a.raca ? `<p><strong>Raça:</strong> ${a.raca}</p>` : ''}
-        <p><strong>Faixa etária:</strong> ${a.faixa_etaria || 'não informado'}</p>
-        <p><strong>ONG:</strong> ${a.ong_nome}</p>
-      </div>
-    `).join('');
-  } catch {
-    lista.innerHTML = '<p class="erro">Erro ao carregar animais.</p>';
-  }
+    lista.forEach(animal => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+            <h3>${animal.nome}</h3>
+            <p>${animal.especie}</p>
+            <button onclick="verAnimal(${animal.id})">Ver</button>
+        `;
+
+        container.appendChild(card);
+    });
 }
 
-carregarAnimais();
+// ==========================
+// NAVEGAÇÃO
+// ==========================
+function irPerfil() {
+    window.location.href = "perfil.html";
+}
+
+function verAnimal(id) {
+    window.location.href = `animal.html?id=${id}`;
+}

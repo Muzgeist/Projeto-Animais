@@ -1,45 +1,39 @@
-const AnimalModel = require('../models/animalModel');
+const db = require("../config/db");
 
-async function listar(req, res) {
-  try {
-    const { status, especie } = req.query;
-    const animais = await AnimalModel.findAll({ status, especie });
-    return res.json(animais);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ erro: 'Erro interno no servidor.' });
-  }
-}
+async function listarAnimais(req, res) {
+    try {
+        const [rows] = await db.promise().query(`
+            SELECT 
+                a.id,
+                a.nome,
+                a.especie,
+                a.raca,
+                a.data_nascimento,
+                a.status,
+                a.destaque,
 
-async function detalhe(req, res) {
-  try {
-    const animal = await AnimalModel.findById(req.params.id);
-    if (!animal) return res.status(404).json({ erro: 'Animal não encontrado.' });
-    return res.json(animal);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ erro: 'Erro interno no servidor.' });
-  }
-}
+                u.nome AS ong_nome,
 
-async function cadastrar(req, res) {
-  try {
-    const { nome, especie, raca, data_nascimento, descricao } = req.body;
+                (
+                    SELECT url 
+                    FROM imagens_animais 
+                    WHERE animal_id = a.id 
+                    LIMIT 1
+                ) AS imagem
 
-    if (!nome || !especie) {
-      return res.status(400).json({ erro: 'Nome e espécie são obrigatórios.' });
+            FROM animais a
+            JOIN usuarios u ON a.ong_id = u.id
+            WHERE a.status = 'disponivel'
+        `);
+
+        res.json(rows);
+
+    } catch (error) {
+        console.error("Erro ao buscar animais:", error);
+        res.status(500).json({ erro: "Erro ao buscar animais" });
     }
-
-    const id = await AnimalModel.create({
-      nome, especie, raca, data_nascimento, descricao,
-      ong_id: req.usuario.id,
-    });
-
-    return res.status(201).json({ mensagem: 'Animal cadastrado com sucesso.', id });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ erro: 'Erro interno no servidor.' });
-  }
 }
 
-module.exports = { listar, detalhe, cadastrar };
+module.exports = {
+    listarAnimais
+};

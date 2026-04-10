@@ -1,0 +1,174 @@
+
+/* =============================
+   Tela de exibição do animal
+   ============================= */
+
+body.page-animal { display: block; }
+
+.animal-main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 2.5rem;
+}
+
+/* Foto */
+.foto-wrap {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.foto-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.foto-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #555;
+}
+
+.foto-placeholder svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.5;
+}
+
+.foto-placeholder span { font-size: 13px; }
+
+/* Cabeçalho do animal */
+.nome-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.nome-row h1 {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.badge-disponivel  { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.3); }
+.badge-em_processo { background: rgba(255,200,0,0.12);  color: #ffc800; border: 1px solid rgba(255,200,0,0.3); }
+.badge-adotado     { background: #2a2a2a; color: #888; border: 1px solid #444; }
+
+.ong-nome {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 1.5rem;
+}
+
+/* Cards de info */
+.info-card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 4px 16px;
+    margin-bottom: 1rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.info-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.info-item:nth-last-child(-n+2) { border-bottom: none; }
+.info-item:nth-child(odd)  { padding-right: 16px; border-right: 1px solid #2a2a2a; }
+.info-item:nth-child(even) { padding-left: 16px; }
+
+.info-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+.info-value { font-size: 15px; font-weight: 500; }
+
+/* Enfermidade */
+.enf-card {
+    background: rgba(255,200,0,0.07);
+    border: 1px solid rgba(255,200,0,0.25);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 1rem;
+}
+
+.enf-label { font-size: 12px; color: #ffc800; margin-bottom: 5px; font-weight: 500; }
+.enf-text  { font-size: 14px; color: #e0b800; line-height: 1.6; }
+
+/* Descrição */
+.desc-card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 1.5rem;
+}
+
+.desc-label { font-size: 12px; color: #888; margin-bottom: 6px; }
+.desc-text  { font-size: 15px; line-height: 1.7; }
+
+/* Confirmação */
+.confirmacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 1.5rem;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.25);
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.check-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #00ff88;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirmacao p    { font-size: 15px; font-weight: 500; color: #00ff88; }
+.confirmacao span { font-size: 13px; color: #00cc70; }
+
+/* Botão adotar */
+.btn-adotar {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #121212;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 0;
+}
+
+.btn-adotar:hover  { opacity: 0.88; }
+.btn-adotar:active { opacity: 0.72; }
+.btn-adotar:disabled { opacity: 0.4; cursor: default; }
