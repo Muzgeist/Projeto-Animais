@@ -5,10 +5,10 @@
     <title>Cadastrar Animal – Abrigo</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="page-form">
 
 <header>
-    <span id="saudacao"></span>
+    <span id="saudacao" style="font-size:14px;color:#aaa;"></span>
     <button class="perfil-btn" onclick="window.location.href='home.html'">← Voltar</button>
 </header>
 
@@ -16,8 +16,18 @@
     <div class="form-card">
         <h2>Cadastrar animal</h2>
 
-        <p id="erroGeral" class="erro hidden"></p>
+        <p id="erroGeral" class="erro   hidden"></p>
         <p id="sucesso"   class="sucesso hidden"></p>
+
+        <!-- Foto -->
+        <div class="field">
+            <label>Foto do animal</label>
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="inputFoto" accept="image/*">
+                <p class="upload-label">Clique para selecionar uma imagem</p>
+                <img id="previewFoto" class="upload-preview" alt="Preview">
+            </div>
+        </div>
 
         <div class="field">
             <label for="nome">Nome <span class="req">*</span></label>
@@ -81,6 +91,7 @@
     </div>
 </main>
 
+<script src="../js/dados.js"></script>
 <script src="../js/cadastrar-animal.js"></script>
 </body>
 </html>

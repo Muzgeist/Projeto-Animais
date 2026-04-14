@@ -8,7 +8,7 @@
 <body class="page-home">
 
 <header>
-    <span id="saudacao"></span>
+    <span id="saudacao" style="font-size:14px;color:#aaa;"></span>
     <div>
         <button id="btnCadastrarAnimal" class="hidden" onclick="window.location.href='cadastrar-animal.html'">+ Cadastrar Animal</button>
         <button class="perfil-btn" onclick="window.location.href='perfil.html'">Perfil</button>
@@ -23,16 +23,36 @@
             <option value="">Todas as espécies</option>
             <option value="cao">Cachorro</option>
             <option value="gato">Gato</option>
+            <option value="ave">Ave</option>
+            <option value="roedor">Roedor</option>
+            <option value="reptil">Réptil</option>
             <option value="outro">Outro</option>
         </select>
-        <button onclick="carregarAnimais()">Filtrar</button>
+        <button onclick="renderizar()">Filtrar</button>
     </div>
 
-    <div id="listaAnimais" class="lista-animais">
-        <p>Carregando...</p>
+    <div id="secao-filhotes">
+        <p class="secao-titulo">Filhotes</p>
+        <div class="grid-animais" id="grid-filhotes"></div>
+    </div>
+
+    <div id="secao-jovens">
+        <p class="secao-titulo">Jovens</p>
+        <div class="grid-animais" id="grid-jovens"></div>
+    </div>
+
+    <div id="secao-adultos">
+        <p class="secao-titulo">Adultos</p>
+        <div class="grid-animais" id="grid-adultos"></div>
+    </div>
+
+    <div id="secao-idosos">
+        <p class="secao-titulo">Idosos</p>
+        <div class="grid-animais" id="grid-idosos"></div>
     </div>
 </main>
 
+<script src="../js/dados.js"></script>
 <script src="../js/home.js"></script>
 </body>
 </html>

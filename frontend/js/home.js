@@ -1,152 +1,79 @@
-const API_URL = "http://localhost:3000/api";
+const sess = getSession();
 
-// estado global simples
-let animais = [];
-let filtroAtual = "todos";
-
-// ==========================
-// INIT
-// ==========================
-document.addEventListener("DOMContentLoaded", () => {
-    carregarUsuario();
-    carregarAnimais();
-});
-
-// ==========================
-// USUÁRIO
-// ==========================
-async function carregarUsuario() {
-    try {
-        const token = localStorage.getItem('token');
-        if (!token) return;
-
-        const res = await fetch(`${API_URL}/perfil`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        });
-        if (!res.ok) return;
-        const user = await res.json();
-
-        document.getElementById("boasVindas").innerText =
-            `Bem vindo de volta, ${user.nome}`;
-
-    } catch (err) {
-        console.error("Erro ao carregar usuário:", err);
+// Saudação e botão ONG
+if (sess) {
+    document.getElementById('saudacao').textContent = `Olá, ${sess.nome}!`;
+    if (sess.tipo === 'ong') {
+        document.getElementById('btnCadastrarAnimal').classList.remove('hidden');
     }
 }
 
-// ==========================
-// ANIMAIS
-// ==========================
-async function carregarAnimais() {
-    try {
-        const res = await fetch(`${API_URL}/animais`);
-        animais = await res.json();
+const LABEL_ESPECIE = {
+    cao: 'Cachorro', gato: 'Gato', ave: 'Ave',
+    roedor: 'Roedor', reptil: 'Réptil', outro: 'Outro',
+};
 
-        renderizar();
+const LABEL_STATUS = {
+    disponivel:  { texto: 'Disponível',  css: 'badge-disponivel' },
+    em_processo: { texto: 'Em processo', css: 'badge-em_processo' },
+    adotado:     { texto: 'Adotado',     css: 'badge-adotado' },
+};
 
-    } catch (err) {
-        console.error("Erro ao carregar animais:", err);
-    }
+function placeholderSVG() {
+    return `<div class="card-foto-placeholder">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="4" y="10" width="40" height="30" rx="4"/>
+            <circle cx="24" cy="23" r="7"/>
+            <circle cx="36" cy="16" r="2" fill="currentColor"/>
+        </svg>
+    </div>`;
 }
 
-// ==========================
-// FILTRO
-// ==========================
-function filtrar(tipo) {
-    filtroAtual = tipo;
-    renderizar();
+function criarCard(animal) {
+    const st  = LABEL_STATUS[animal.status] || { texto: animal.status, css: '' };
+    const esp = LABEL_ESPECIE[animal.especie] || animal.especie;
+    const foto = animal.foto_url
+        ? `<img class="card-foto" src="${animal.foto_url}" alt="Foto de ${animal.nome}">`
+        : placeholderSVG();
+
+    const card = document.createElement('div');
+    card.className = 'card-animal';
+    card.onclick = () => window.location.href = `animal.html?id=${animal.id}`;
+    card.innerHTML = `
+        ${foto}
+        <div class="card-body">
+            <h3>${animal.nome}</h3>
+            <p>${esp}${animal.raca ? ' · ' + animal.raca : ''}</p>
+            <span class="badge-card ${st.css}">${st.texto}</span>
+        </div>
+    `;
+    return card;
 }
 
-// ==========================
-// CLASSIFICAÇÃO POR IDADE
-// ==========================
-function classificarIdade(dataNascimento) {
-    const hoje = new Date();
-    const nascimento = new Date(dataNascimento);
+function renderizarSecao(id, lista) {
+    const grid  = document.getElementById('grid-' + id);
+    const secao = document.getElementById('secao-' + id);
+    grid.innerHTML = '';
 
-    const idadeMeses = (hoje - nascimento) / (1000 * 60 * 60 * 24 * 30);
-    const idadeAnos = idadeMeses / 12;
-
-    if (idadeMeses <= 12) return "filhote";
-    if (idadeAnos <= 8) return "adulto";
-    return "idoso";
-}
-
-// ==========================
-// FILTRO DE ESPÉCIE
-// ==========================
-function aplicarFiltro(lista) {
-    if (filtroAtual === "todos") return lista;
-
-    return lista.filter(a => {
-        if (!a.especie) return false;
-
-        const especie = a.especie.toLowerCase();
-
-        if (filtroAtual === "outros") {
-            return especie !== "cachorro" && especie !== "gato";
-        }
-
-        return especie === filtroAtual;
-    });
-}
-
-// ==========================
-// RENDERIZAÇÃO
-// ==========================
-function renderizar() {
-    const filtrados = aplicarFiltro(animais);
-
-    const filhotes = [];
-    const adultos = [];
-    const idosos = [];
-
-    filtrados.forEach(animal => {
-        const tipo = classificarIdade(animal.data_nascimento);
-
-        if (tipo === "filhote") filhotes.push(animal);
-        else if (tipo === "adulto") adultos.push(animal);
-        else idosos.push(animal);
-    });
-
-    renderCarrossel("filhotes", filhotes);
-    renderCarrossel("adultos", adultos);
-    renderCarrossel("idosos", idosos);
-}
-
-// ==========================
-// CARDS
-// ==========================
-function renderCarrossel(id, lista) {
-    const container = document.getElementById(id);
-    container.innerHTML = "";
-
-    if (lista.length === 0) {
-        container.innerHTML = "<p>Nenhum animal encontrado</p>";
+    if (!lista.length) {
+        secao.style.display = 'none';
         return;
     }
-
-    lista.forEach(animal => {
-        const card = document.createElement("div");
-        card.classList.add("card");
-
-        card.innerHTML = `
-            <h3>${animal.nome}</h3>
-            <p>${animal.especie}</p>
-            <button onclick="verAnimal(${animal.id})">Ver</button>
-        `;
-
-        container.appendChild(card);
-    });
+    secao.style.display = '';
+    lista.forEach(a => grid.appendChild(criarCard(a)));
 }
 
-// ==========================
-// NAVEGAÇÃO
-// ==========================
-function irPerfil() {
-    window.location.href = "perfil.html";
+function renderizar() {
+    const especie = document.getElementById('filtroEspecie').value;
+    const filtros = {};
+    if (especie) filtros.especie = especie;
+
+    const lista = getAnimais(filtros);
+
+    renderizarSecao('filhotes', lista.filter(a => a.faixa_etaria === 'filhote'));
+    renderizarSecao('jovens',   lista.filter(a => a.faixa_etaria === 'jovem'));
+    renderizarSecao('adultos',  lista.filter(a => a.faixa_etaria === 'adulto'));
+    renderizarSecao('idosos',   lista.filter(a => a.faixa_etaria === 'idoso'));
 }
 
-function verAnimal(id) {
-    window.location.href = `animal.html?id=${id}`;
-}
+renderizar();

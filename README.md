@@ -1,39 +1,85 @@
-# 🐾 Abrigo – Sistema de Adoção de Animais
+# 🐾 Abrigo — Frontend Estático
 
-## Pré-requisitos
-- Node.js 18+
-- MySQL 8+
+Versão do projeto sem dependência de backend ou banco de dados.
+Todos os dados ficam em `frontend/js/dados.js`.
 
-## Setup do Banco
+## Como abrir
 
-```bash
-mysql -u root -p
-CREATE DATABASE abrigo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE abrigo;
-SOURCE database/schema.sql;
+Abra `frontend/screens/index.html` no navegador.
+Recomendado: extensão **Live Server** no VSCode.
+
+## Usuários de teste
+
+| Tipo     | Email                    | Senha  |
+|----------|--------------------------|--------|
+| ONG      | contato@esperanca.org    | 123456 |
+| Adotante | maria@email.com          | 123456 |
+
+## Como adicionar imagens dos animais
+
+1. Coloque o arquivo de imagem em `frontend/assets/animais/`
+   - Formatos aceitos: `.jpg`, `.jpeg`, `.png`, `.webp`
+   - Exemplo: `frontend/assets/animais/bolt.jpg`
+
+2. Abra `frontend/js/dados.js` e localize o animal pelo nome.
+
+3. Substitua o `null` de `foto_url` pelo caminho relativo:
+   ```js
+   foto_url: '../assets/animais/bolt.jpg'
+   ```
+
+## Como adicionar/editar animais
+
+Edite o array `ANIMAIS` em `frontend/js/dados.js`.
+Cada animal segue esta estrutura:
+
+```js
+{
+    id: 7,                          // número único
+    nome: 'Rex',
+    especie: 'cao',                 // cao | gato | ave | roedor | reptil | outro
+    raca: 'Pastor Alemão',          // ou null
+    data_nascimento: '2021-06-10',  // formato YYYY-MM-DD, ou null
+    status: 'disponivel',           // disponivel | em_processo | adotado
+    ong_id: 1,
+    ong_nome: 'Abrigo Esperança',
+    enfermidade: null,              // string descritiva ou null
+    descricao: 'Descrição aqui.',
+    foto_url: '../assets/animais/rex.jpg',  // ou null para placeholder
+}
 ```
 
-## Setup do Backend
+## Estrutura de pastas
 
-```bash
-cd backend
-cp .env.example .env
-# edite .env com suas credenciais
-npm install
-npm run dev
+```
+frontend/
+  assets/
+    animais/    ← coloque as fotos dos animais aqui
+    ongs/       ← coloque logos/fotos das ONGs aqui (uso futuro)
+  css/
+    style.css   ← CSS unificado
+  js/
+    dados.js    ← FONTE CENTRAL de dados e sessão
+    login.js
+    cadastro.js
+    home.js
+    perfil.js
+    animal.js
+    cadastrar-animal.js
+    utils.js
+  screens/
+    index.html           ← Login (ponto de entrada)
+    cadastro.html
+    home.html
+    perfil.html
+    animal.html
+    cadastrar-animal.html
 ```
 
-## Rodando o Frontend
+## Observações
 
-Abra `frontend/screens/index.html` no navegador (ou use Live Server no VSCode).
-
-## Rotas da API
-
-| Método | Rota              | Auth | Descrição                     |
-|--------|-------------------|------|-------------------------------|
-| POST   | /api/register     | ❌   | Cadastro de usuário            |
-| POST   | /api/login        | ❌   | Login, retorna JWT             |
-| GET    | /api/perfil       | ✅   | Dados do usuário logado        |
-| GET    | /api/animais      | ❌   | Lista animais (filtros opcionais) |
-| GET    | /api/animais/:id  | ❌   | Detalhe de um animal           |
-| POST   | /api/animais      | ✅ ONG | Cadastrar animal             |
+- Dados de animais cadastrados durante a sessão somem ao recarregar a página
+  (comportamento esperado nesta versão estática — sem banco).
+- Ao integrar com o backend, substitua as chamadas em `dados.js` por `fetch()`.
+- A foto enviada no cadastro de animal é lida como base64 (FileReader) e
+  exibida apenas durante a sessão atual.

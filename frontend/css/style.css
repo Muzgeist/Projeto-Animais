@@ -1,3 +1,7 @@
+/* =====================================================
+   style.css — folha de estilos unificada do Abrigo
+   ===================================================== */
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -10,63 +14,17 @@ body {
     min-height: 100vh;
 }
 
-body.page-home {
-    display: block;
-    align-items: unset;
-}
-
-/* ---- Container (login/cadastro/perfil) ---- */
-.container {
-    background: #1e1e1e;
-    padding: 30px;
-    border-radius: 10px;
-    width: 340px;
-    text-align: center;
-}
-
-.container h2 { margin-bottom: 16px; }
-
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 5px;
-    background: #2a2a2a;
-    color: white;
-}
-
-input::placeholder { color: #888; }
-
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    background: #444;
-    color: white;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-button:hover { background: #666; }
-
-.btn-cadastro {
-    color: #00ff88;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-}
-.btn-cadastro:hover { text-shadow: 0 0 8px #00ff88; }
-
-.cadastro-texto { margin-top: 15px; font-size: 14px; }
-
+/* ---- Utilitários ---- */
 .hidden { display: none !important; }
-
 .erro   { color: #ff6b6b; font-size: 13px; margin: 6px 0; }
 .sucesso { color: #00ff88; font-size: 13px; margin: 6px 0; }
+.req { color: #ff6b6b; }
 
-/* ---- Header (home) ---- */
+/* =====================================================
+   COMPONENTES GLOBAIS
+   ===================================================== */
+
+/* Header fixo (home, animal, cadastrar-animal) */
 header {
     display: flex;
     justify-content: space-between;
@@ -76,47 +34,402 @@ header {
     position: sticky;
     top: 0;
     z-index: 10;
+    border-bottom: 1px solid #2a2a2a;
 }
-
 header div { display: flex; gap: 8px; }
 
-.perfil-btn {
-    width: auto;
-    padding: 8px 14px;
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #444;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 14px;
+}
+button:hover { background: #555; }
+button:active { opacity: 0.8; }
+
+.perfil-btn { width: auto; padding: 8px 14px; }
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #2a2a2a;
+    color: white;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+}
+input::placeholder,
+textarea::placeholder { color: #666; }
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #555;
 }
 
-/* ---- Home main ---- */
+/* =====================================================
+   TELA LOGIN / CADASTRO / PERFIL — container centrado
+   ===================================================== */
+.container {
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 10px;
+    width: 340px;
+    text-align: center;
+}
+.container h2 { margin-bottom: 16px; font-size: 20px; }
+.container button { width: 100%; margin-top: 10px; }
+
+.btn-cadastro {
+    color: #00ff88;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.btn-cadastro:hover { text-shadow: 0 0 8px #00ff88; }
+.cadastro-texto { margin-top: 15px; font-size: 14px; }
+
+/* =====================================================
+   TELA HOME
+   ===================================================== */
+body.page-home,
+body.page-animal,
+body.page-form {
+    display: block;
+    align-items: unset;
+}
+
 main {
     padding: 24px;
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
 }
+main h1 { margin-bottom: 20px; font-size: 20px; font-weight: 500; }
 
-main h1 { margin-bottom: 16px; }
-
+/* Filtros */
 .filtros {
     display: flex;
     gap: 10px;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+.filtros select { margin: 0; flex: 1; min-width: 160px; }
+.filtros button { width: auto; margin: 0; padding: 10px 20px; background: #333; }
+.filtros button:hover { background: #444; }
+
+/* Seções por faixa etária */
+.secao-titulo {
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 28px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #2a2a2a;
 }
 
-.filtros select { margin: 0; flex: 1; }
-.filtros button { width: auto; margin: 0; padding: 10px 20px; }
-
-/* ---- Cards ---- */
-.lista-animais {
+/* Grid de cards */
+.grid-animais {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
 }
 
 .card-animal {
     background: #1e1e1e;
     border-radius: 10px;
-    padding: 18px;
+    overflow: hidden;
     cursor: pointer;
     transition: transform 0.15s, background 0.15s;
+    border: 1px solid #2a2a2a;
 }
-.card-animal:hover { background: #2a2a2a; transform: translateY(-2px); }
-.card-animal h3 { margin-bottom: 10px; color: #00ff88; }
-.card-animal p  { font-size: 14px; margin: 4px 0; }
+.card-animal:hover { background: #242424; transform: translateY(-3px); }
+
+.card-foto {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    background: #2a2a2a;
+}
+.card-foto-placeholder {
+    width: 100%;
+    height: 150px;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+}
+.card-foto-placeholder svg { width: 40px; height: 40px; }
+
+.card-body { padding: 14px; }
+.card-body h3 { font-size: 16px; margin-bottom: 6px; color: #00ff88; }
+.card-body p  { font-size: 13px; color: #aaa; margin: 2px 0; }
+
+.badge-card {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 8px;
+}
+.badge-disponivel  { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.25); }
+.badge-em_processo { background: rgba(255,200,0,0.12);  color: #ffc800; border: 1px solid rgba(255,200,0,0.25); }
+.badge-adotado     { background: #222; color: #666; border: 1px solid #333; }
+
+.vazio { color: #555; font-size: 14px; padding: 8px 0; }
+
+/* =====================================================
+   TELA ANIMAL (exibição)
+   ===================================================== */
+.animal-main {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+}
+
+.foto-wrap {
+    width: 100%;
+    height: 320px;
+    border-radius: 10px;
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+.foto-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.foto-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: #444;
+}
+.foto-placeholder svg { width: 48px; height: 48px; }
+.foto-placeholder span { font-size: 13px; }
+
+.nome-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+}
+.nome-row h1 { font-size: 24px; font-weight: 500; }
+
+.badge {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.ong-nome { font-size: 13px; color: #777; margin-bottom: 1.5rem; }
+
+/* Info grid */
+.info-card {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 4px 16px;
+    margin-bottom: 1rem;
+}
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.info-item { padding: 12px 0; border-bottom: 1px solid #222; }
+.info-item:nth-last-child(-n+2) { border-bottom: none; }
+.info-item:nth-child(odd)  { padding-right: 16px; border-right: 1px solid #222; }
+.info-item:nth-child(even) { padding-left: 16px; }
+.info-label { font-size: 12px; color: #777; margin-bottom: 4px; }
+.info-value { font-size: 15px; font-weight: 500; }
+
+/* Enfermidade */
+.enf-card {
+    background: rgba(255,200,0,0.07);
+    border: 1px solid rgba(255,200,0,0.2);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 1rem;
+}
+.enf-label { font-size: 12px; color: #ffc800; margin-bottom: 5px; font-weight: 500; }
+.enf-text  { font-size: 14px; color: #d4a800; line-height: 1.6; }
+
+/* Descrição */
+.desc-card {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 1.5rem;
+}
+.desc-label { font-size: 12px; color: #777; margin-bottom: 6px; }
+.desc-text  { font-size: 15px; line-height: 1.75; color: #ddd; }
+
+/* Confirmação adoção */
+.confirmacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 1.5rem;
+    background: rgba(0,255,136,0.07);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 0;
+}
+.check-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #00cc6a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.confirmacao p    { font-size: 15px; font-weight: 500; color: #00ff88; }
+.confirmacao span { font-size: 13px; color: #00cc6a; }
+
+.btn-adotar {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: white;
+    color: #121212;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 0;
+}
+.btn-adotar:hover  { opacity: 0.88; background: white; }
+.btn-adotar:disabled { opacity: 0.4; cursor: default; }
+
+/* =====================================================
+   TELA CADASTRAR ANIMAL / FORM GENÉRICO
+   ===================================================== */
+.form-main {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 2rem 1rem 3rem;
+}
+.form-card {
+    background: #1e1e1e;
+    border-radius: 10px;
+    padding: 28px;
+    border: 1px solid #2a2a2a;
+}
+.form-card h2 { font-size: 18px; font-weight: 500; margin-bottom: 1.5rem; }
+.form-card button { width: 100%; margin-top: 4px; }
+
+.field { margin-bottom: 1.25rem; }
+.field label {
+    display: block;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 4px;
+}
+.field input,
+.field select,
+.field textarea { margin: 0; }
+textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+.divider { border: none; border-top: 1px solid #2a2a2a; margin: 1.25rem 0; }
+
+.radio-group { display: flex; gap: 10px; }
+.radio-opt {
+    flex: 1;
+    padding: 9px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.15s, border-color 0.15s;
+    margin: 0;
+    width: auto;
+}
+.radio-opt.selected-sim { background: rgba(255,107,107,0.12); border-color: #ff6b6b; color: #ff6b6b; }
+.radio-opt.selected-nao { background: rgba(0,255,136,0.10);  border-color: #00ff88; color: #00ff88; }
+
+.campo-enfermidade { margin-top: 12px; }
+.badge-obrig {
+    display: inline-block;
+    font-size: 11px;
+    background: rgba(255,107,107,0.15);
+    color: #ff6b6b;
+    border-radius: 4px;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+.erro-campo {
+    font-size: 12px;
+    color: #ff6b6b;
+    margin-top: 4px;
+}
+
+/* Upload de foto */
+.upload-area {
+    border: 2px dashed #333;
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    position: relative;
+}
+.upload-area:hover { border-color: #555; }
+.upload-area input[type=file] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.upload-label { font-size: 13px; color: #777; }
+.upload-preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 8px;
+    display: none;
+}
+
+/* =====================================================
+   TELA PERFIL — extensão do container
+   ===================================================== */
+.perfil-info { text-align: left; margin-bottom: 1rem; }
+.perfil-info p { font-size: 14px; padding: 8px 0; border-bottom: 1px solid #2a2a2a; }
+.perfil-info p:last-child { border-bottom: none; }
+.perfil-info strong { color: #888; font-weight: normal; font-size: 12px; display: block; margin-bottom: 2px; }
+.perfil-tipo {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+.tipo-ong      { background: rgba(0,200,255,0.12); color: #00c8ff; border: 1px solid rgba(0,200,255,0.25); }
+.tipo-adotante { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.25); }
+.btn-sair { background: #2a2a2a; margin-top: 16px; }
+.btn-sair:hover { background: #333; }
