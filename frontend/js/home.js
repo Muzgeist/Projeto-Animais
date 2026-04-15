@@ -1,22 +1,15 @@
 const sess = getSession();
 
-// Saudação e botão ONG
 if (sess) {
     document.getElementById('saudacao').textContent = `Olá, ${sess.nome}!`;
-    if (sess.tipo === 'ong') {
-        document.getElementById('btnCadastrarAnimal').classList.remove('hidden');
-    }
+    if (sess.tipo === 'ong') document.getElementById('btnCadastrarAnimal').classList.remove('hidden');
 }
 
-const LABEL_ESPECIE = {
-    cao: 'Cachorro', gato: 'Gato', ave: 'Ave',
-    roedor: 'Roedor', reptil: 'Réptil', outro: 'Outro',
-};
-
-const LABEL_STATUS = {
-    disponivel:  { texto: 'Disponível',  css: 'badge-disponivel' },
-    em_processo: { texto: 'Em processo', css: 'badge-em_processo' },
-    adotado:     { texto: 'Adotado',     css: 'badge-adotado' },
+const LABEL_ESPECIE = { cao:'Cachorro', gato:'Gato', ave:'Ave', roedor:'Roedor', reptil:'Réptil', outro:'Outro' };
+const LABEL_STATUS  = {
+    disponivel:  { texto:'Disponível',  css:'badge-disponivel' },
+    em_processo: { texto:'Em processo', css:'badge-em_processo' },
+    adotado:     { texto:'Adotado',     css:'badge-adotado' },
 };
 
 function placeholderSVG() {
@@ -50,10 +43,12 @@ function criarCard(animal) {
     return card;
 }
 
-function renderizarSecao(id, lista) {
-    const grid  = document.getElementById('grid-' + id);
-    const secao = document.getElementById('secao-' + id);
+function renderizarSecao(faixa, lista) {
+    const grid  = document.getElementById('grid-' + faixa);
+    const secao = document.getElementById('secao-' + faixa);
+    const badge = document.getElementById('badge-' + faixa);
     grid.innerHTML = '';
+    badge.textContent = lista.length;
 
     if (!lista.length) {
         secao.style.display = 'none';
@@ -65,13 +60,10 @@ function renderizarSecao(id, lista) {
 
 function renderizar() {
     const especie = document.getElementById('filtroEspecie').value;
-    const filtros = {};
-    if (especie) filtros.especie = especie;
-
-    const lista = getAnimais(filtros);
+    const filtros = especie ? { especie } : {};
+    const lista   = getAnimais(filtros);
 
     renderizarSecao('filhotes', lista.filter(a => a.faixa_etaria === 'filhote'));
-    renderizarSecao('jovens',   lista.filter(a => a.faixa_etaria === 'jovem'));
     renderizarSecao('adultos',  lista.filter(a => a.faixa_etaria === 'adulto'));
     renderizarSecao('idosos',   lista.filter(a => a.faixa_etaria === 'idoso'));
 }

@@ -8,7 +8,7 @@
 <body class="page-home">
 
 <header>
-    <span id="saudacao" style="font-size:14px;color:#aaa;"></span>
+    <span id="saudacao"></span>
     <div>
         <button id="btnCadastrarAnimal" class="hidden" onclick="window.location.href='cadastrar-animal.html'">+ Cadastrar Animal</button>
         <button class="perfil-btn" onclick="window.location.href='perfil.html'">Perfil</button>
@@ -31,23 +31,27 @@
         <button onclick="renderizar()">Filtrar</button>
     </div>
 
-    <div id="secao-filhotes">
-        <p class="secao-titulo">Filhotes</p>
+    <div id="secao-filhotes" class="secao">
+        <div class="secao-header">
+            <span class="secao-titulo">Filhotes</span>
+            <span class="secao-badge" id="badge-filhotes">0</span>
+        </div>
         <div class="grid-animais" id="grid-filhotes"></div>
     </div>
 
-    <div id="secao-jovens">
-        <p class="secao-titulo">Jovens</p>
-        <div class="grid-animais" id="grid-jovens"></div>
-    </div>
-
-    <div id="secao-adultos">
-        <p class="secao-titulo">Adultos</p>
+    <div id="secao-adultos" class="secao">
+        <div class="secao-header">
+            <span class="secao-titulo">Adultos</span>
+            <span class="secao-badge" id="badge-adultos">0</span>
+        </div>
         <div class="grid-animais" id="grid-adultos"></div>
     </div>
 
-    <div id="secao-idosos">
-        <p class="secao-titulo">Idosos</p>
+    <div id="secao-idosos" class="secao">
+        <div class="secao-header">
+            <span class="secao-titulo">Idosos</span>
+            <span class="secao-badge" id="badge-idosos">0</span>
+        </div>
         <div class="grid-animais" id="grid-idosos"></div>
     </div>
 </main>

@@ -6,23 +6,19 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="page-form">
-
 <header>
-    <span id="saudacao" style="font-size:14px;color:#aaa;"></span>
+    <span id="saudacao"></span>
     <button class="perfil-btn" onclick="window.location.href='home.html'">← Voltar</button>
 </header>
-
 <main class="form-main">
     <div class="form-card">
         <h2>Cadastrar animal</h2>
-
         <p id="erroGeral" class="erro   hidden"></p>
         <p id="sucesso"   class="sucesso hidden"></p>
 
-        <!-- Foto -->
         <div class="field">
             <label>Foto do animal</label>
-            <div class="upload-area" id="uploadArea">
+            <div class="upload-area">
                 <input type="file" id="inputFoto" accept="image/*">
                 <p class="upload-label">Clique para selecionar uma imagem</p>
                 <img id="previewFoto" class="upload-preview" alt="Preview">
@@ -34,7 +30,6 @@
             <input type="text" id="nome" placeholder="Ex: Bolinha">
             <p class="erro-campo hidden" id="erro-nome">Informe o nome do animal.</p>
         </div>
-
         <div class="field">
             <label for="especie">Espécie <span class="req">*</span></label>
             <select id="especie">
@@ -48,12 +43,10 @@
             </select>
             <p class="erro-campo hidden" id="erro-especie">Selecione a espécie.</p>
         </div>
-
         <div class="field">
             <label for="raca">Raça</label>
-            <input type="text" id="raca" placeholder="Ex: Labrador, SRD (sem raça definida)">
+            <input type="text" id="raca" placeholder="Ex: Labrador, SRD">
         </div>
-
         <div class="field">
             <label for="dataNasc">Data de nascimento</label>
             <input type="date" id="dataNasc">
@@ -68,14 +61,10 @@
                 <button type="button" class="radio-opt" id="opt-nao" onclick="selecionarEnfermidade('nao')">Não</button>
             </div>
             <p class="erro-campo hidden" id="erro-enfermidade">Selecione uma opção.</p>
-
             <div class="campo-enfermidade hidden" id="campo-enfermidade">
-                <label for="descEnfermidade">
-                    Qual enfermidade ou deficiência?
-                    <span class="badge-obrig">obrigatório</span>
-                </label>
+                <label for="descEnfermidade">Qual enfermidade ou deficiência? <span class="badge-obrig">obrigatório</span></label>
                 <textarea id="descEnfermidade" placeholder="Descreva a condição do animal..."></textarea>
-                <p class="erro-campo hidden" id="erro-desc-enfermidade">Descreva a enfermidade ou deficiência.</p>
+                <p class="erro-campo hidden" id="erro-desc-enfermidade">Descreva a enfermidade.</p>
             </div>
         </div>
 
@@ -83,14 +72,13 @@
 
         <div class="field">
             <label for="descricao">Descrição <span class="req">*</span></label>
-            <textarea id="descricao" placeholder="Conte um pouco sobre o animal: personalidade, comportamento, se dá bem com crianças ou outros pets..."></textarea>
-            <p class="erro-campo hidden" id="erro-descricao">Escreva uma descrição sobre o animal.</p>
+            <textarea id="descricao" placeholder="Personalidade, comportamento, dá bem com crianças ou outros pets..."></textarea>
+            <p class="erro-campo hidden" id="erro-descricao">Escreva uma descrição.</p>
         </div>
 
         <button id="btnCadastrar">Cadastrar animal</button>
     </div>
 </main>
-
 <script src="../js/dados.js"></script>
 <script src="../js/cadastrar-animal.js"></script>
 </body>
