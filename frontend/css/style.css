@@ -478,3 +478,195 @@ main > h1 {
 
 .btn-sair { background: var(--bg-input); color: var(--marrom); border: 1.5px solid var(--marrom-borda); width: 100%; margin-top: 4px; }
 .btn-sair:hover { background: var(--marrom-bg); }
+
+/* =====================================================
+   PERFIL — TELA EXPANDIDA
+   ===================================================== */
+body.page-perfil { display: block; align-items: unset; background: var(--bg); }
+
+.perfil-main {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+}
+
+/* ── Hero card ── */
+.perfil-hero {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--bg-card);
+    border: 1.5px solid var(--borda);
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(137,81,41,0.07);
+}
+
+/* Avatar */
+.perfil-avatar-wrap {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    border: 3px solid var(--verde);
+    overflow: hidden;
+    background: var(--bg-input);
+}
+.perfil-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.perfil-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--borda-forte);
+    background: var(--bg-input);
+}
+.perfil-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(137,81,41,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border-radius: 50%;
+}
+.perfil-avatar-wrap:hover .perfil-avatar-overlay { opacity: 1; }
+
+/* Hero info */
+.perfil-hero-info { flex: 1; min-width: 0; }
+.perfil-hero-info h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--marrom);
+    margin: 6px 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.perfil-email-hero {
+    font-size: 13px;
+    color: var(--texto-muted);
+}
+
+/* Badge de tipo */
+.perfil-tipo-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.perfil-tipo-badge.tipo-ong {
+    background: var(--verde-bg);
+    color: var(--verde-escuro);
+    border: 1px solid var(--verde-borda);
+}
+.perfil-tipo-badge.tipo-adotante {
+    background: var(--marrom-bg);
+    color: var(--marrom);
+    border: 1px solid var(--marrom-borda);
+}
+
+/* ── Seção genérica ── */
+.perfil-section {
+    background: var(--bg-card);
+    border: 1.5px solid var(--borda);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 6px rgba(137,81,41,0.05);
+}
+.perfil-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--marrom);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--verde);
+}
+
+/* ── Campos de dados ── */
+.perfil-campos { display: flex; flex-direction: column; gap: 0; }
+.perfil-campo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--bg-input);
+}
+.perfil-campo:last-child { border-bottom: none; padding-bottom: 0; }
+.campo-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--texto-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 130px;
+}
+.campo-valor {
+    font-size: 14px;
+    color: var(--texto);
+    text-align: right;
+    word-break: break-word;
+}
+
+/* ── Lista de interesses ── */
+.interesses-lista { display: flex; flex-direction: column; gap: 10px; }
+.interesse-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1.5px solid var(--borda);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+.interesse-item:hover { border-color: var(--verde); background: var(--verde-bg); }
+.interesse-info { display: flex; flex-direction: column; gap: 3px; }
+.interesse-nome   { font-size: 15px; font-weight: 600; color: var(--marrom); }
+.interesse-detalhe { font-size: 12px; color: var(--texto-muted); }
+.interesse-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+/* ── Ações ── */
+.perfil-acoes { margin-top: 8px; }
+.btn-sair {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    color: var(--erro);
+    border: 1.5px solid rgba(192,57,43,0.3);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s;
+    margin: 0;
+}
+.btn-sair:hover { background: rgba(192,57,43,0.07); border-color: var(--erro); }

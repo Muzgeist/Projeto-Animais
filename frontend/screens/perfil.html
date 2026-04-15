@@ -5,12 +5,76 @@
     <title>Perfil – Abrigo</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-<div class="container">
-    <h2>Meu Perfil</h2>
-    <div id="dados"><p style="color:#9E8876;">Carregando...</p></div>
-    <button class="btn-sair" onclick="sair()">Sair</button>
-</div>
+<body class="page-perfil">
+
+<header>
+    <span style="font-size:14px;color:var(--texto-muted);">Meu Perfil</span>
+    <button class="perfil-btn" onclick="window.location.href='home.html'">← Voltar</button>
+</header>
+
+<main class="perfil-main">
+
+    <!-- Cartão de identidade -->
+    <div class="perfil-hero">
+        <div class="perfil-avatar-wrap" onclick="document.getElementById('inputFotoPerfil').click()" title="Alterar foto">
+            <img id="avatarImg" class="perfil-avatar" src="" alt="Foto de perfil" style="display:none">
+            <div id="avatarPlaceholder" class="perfil-avatar-placeholder">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40">
+                    <circle cx="24" cy="18" r="9"/>
+                    <path d="M6 42c0-9.94 8.06-18 18-18s18 8.06 18 18"/>
+                </svg>
+            </div>
+            <div class="perfil-avatar-overlay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="18" height="18">
+                    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+                </svg>
+            </div>
+            <input type="file" id="inputFotoPerfil" accept="image/*" style="display:none">
+        </div>
+
+        <div class="perfil-hero-info">
+            <div class="perfil-tipo-badge" id="tipoBadge"></div>
+            <h1 id="perfilNome"></h1>
+            <p id="perfilEmail" class="perfil-email-hero"></p>
+        </div>
+    </div>
+
+    <!-- Dados pessoais -->
+    <div class="perfil-section">
+        <h2 class="perfil-section-title">Dados pessoais</h2>
+        <div class="perfil-campos">
+            <div class="perfil-campo">
+                <span class="campo-label">Nome completo</span>
+                <span class="campo-valor" id="dadoNome"></span>
+            </div>
+            <div class="perfil-campo">
+                <span class="campo-label">Email</span>
+                <span class="campo-valor" id="dadoEmail"></span>
+            </div>
+            <div class="perfil-campo">
+                <span class="campo-label">Telefone</span>
+                <span class="campo-valor" id="dadoTelefone"></span>
+            </div>
+            <div class="perfil-campo">
+                <span class="campo-label">Endereço</span>
+                <span class="campo-valor" id="dadoEndereco"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meus interesses -->
+    <div class="perfil-section" id="secaoInteresses" style="display:none">
+        <h2 class="perfil-section-title">Minhas solicitações de adoção</h2>
+        <div id="listaInteresses" class="interesses-lista"></div>
+    </div>
+
+    <!-- Ações -->
+    <div class="perfil-acoes">
+        <button class="btn-sair" onclick="sair()">Sair da conta</button>
+    </div>
+
+</main>
+
 <script src="../js/dados.js"></script>
 <script src="../js/perfil.js"></script>
 </body>
