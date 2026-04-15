@@ -7,73 +7,67 @@
 </head>
 <body class="page-perfil">
 
-<header>
-    <span style="font-size:14px;color:var(--texto-muted);">Meu Perfil</span>
-    <button class="perfil-btn" onclick="window.location.href='home.html'">← Voltar</button>
-</header>
+    <button class="btn-voltar-perfil" onclick="window.location.href='home.html'">← Voltar</button>
 
-<main class="perfil-main">
+    <div class="perfil-overlay">
+        <div class="perfil-card">
 
-    <!-- Cartão de identidade -->
-    <div class="perfil-hero">
-        <div class="perfil-avatar-wrap" onclick="document.getElementById('inputFotoPerfil').click()" title="Alterar foto">
-            <img id="avatarImg" class="perfil-avatar" src="" alt="Foto de perfil" style="display:none">
-            <div id="avatarPlaceholder" class="perfil-avatar-placeholder">
-                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" width="40" height="40">
-                    <circle cx="24" cy="18" r="9"/>
-                    <path d="M6 42c0-9.94 8.06-18 18-18s18 8.06 18 18"/>
-                </svg>
+            <!-- Foto -->
+            <div class="perfil-foto-wrap" onclick="document.getElementById('inputFotoPerfil').click()" title="Clique para alterar a foto">
+                <img id="avatarImg" class="perfil-foto-img" alt="Foto de perfil">
+                <div id="avatarPlaceholder" class="perfil-foto-placeholder">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" width="44" height="44">
+                        <circle cx="24" cy="18" r="9"/>
+                        <path d="M6 44c0-9.94 8.06-18 18-18s18 8.06 18 18"/>
+                    </svg>
+                </div>
+                <div class="perfil-foto-overlay">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" width="20" height="20">
+                        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+                    </svg>
+                    <span>Alterar foto</span>
+                </div>
+                <input type="file" id="inputFotoPerfil" accept="image/*">
             </div>
-            <div class="perfil-avatar-overlay">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="18" height="18">
-                    <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
-                </svg>
+
+            <!-- Badge tipo -->
+            <div id="tipoBadge" class="perfil-badge-tipo"></div>
+
+            <!-- Nome -->
+            <h1 id="perfilNome" class="perfil-nome"></h1>
+
+            <div class="perfil-divider"></div>
+
+            <!-- Infos -->
+            <div class="perfil-infos">
+                <div class="perfil-info-item">
+                    <span class="pi-label">Email</span>
+                    <span class="pi-valor" id="pEmail"></span>
+                </div>
+                <div class="perfil-info-item">
+                    <span class="pi-label">Telefone</span>
+                    <span class="pi-valor" id="pTelefone"></span>
+                </div>
+                <div class="perfil-info-item">
+                    <span class="pi-label">Endereço</span>
+                    <span class="pi-valor" id="pEndereco"></span>
+                </div>
             </div>
-            <input type="file" id="inputFotoPerfil" accept="image/*" style="display:none">
+
+            <!-- Solicitações (só adotante) -->
+            <div id="secaoInteresses" style="display:none; width:100%">
+                <div class="perfil-divider"></div>
+                <p class="perfil-sec-titulo">Minhas solicitações</p>
+                <div id="listaInteresses" class="perfil-interesses"></div>
+            </div>
+
+            <div class="perfil-divider"></div>
+
+            <!-- Sair -->
+            <button class="perfil-btn-sair" onclick="sair()">Sair da conta</button>
+
         </div>
-
-        <div class="perfil-hero-info">
-            <div class="perfil-tipo-badge" id="tipoBadge"></div>
-            <h1 id="perfilNome"></h1>
-            <p id="perfilEmail" class="perfil-email-hero"></p>
-        </div>
     </div>
-
-    <!-- Dados pessoais -->
-    <div class="perfil-section">
-        <h2 class="perfil-section-title">Dados pessoais</h2>
-        <div class="perfil-campos">
-            <div class="perfil-campo">
-                <span class="campo-label">Nome completo</span>
-                <span class="campo-valor" id="dadoNome"></span>
-            </div>
-            <div class="perfil-campo">
-                <span class="campo-label">Email</span>
-                <span class="campo-valor" id="dadoEmail"></span>
-            </div>
-            <div class="perfil-campo">
-                <span class="campo-label">Telefone</span>
-                <span class="campo-valor" id="dadoTelefone"></span>
-            </div>
-            <div class="perfil-campo">
-                <span class="campo-label">Endereço</span>
-                <span class="campo-valor" id="dadoEndereco"></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Meus interesses -->
-    <div class="perfil-section" id="secaoInteresses" style="display:none">
-        <h2 class="perfil-section-title">Minhas solicitações de adoção</h2>
-        <div id="listaInteresses" class="interesses-lista"></div>
-    </div>
-
-    <!-- Ações -->
-    <div class="perfil-acoes">
-        <button class="btn-sair" onclick="sair()">Sair da conta</button>
-    </div>
-
-</main>
 
 <script src="../js/dados.js"></script>
 <script src="../js/perfil.js"></script>

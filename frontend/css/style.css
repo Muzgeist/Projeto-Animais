@@ -479,194 +479,208 @@ main > h1 {
 .btn-sair { background: var(--bg-input); color: var(--marrom); border: 1.5px solid var(--marrom-borda); width: 100%; margin-top: 4px; }
 .btn-sair:hover { background: var(--marrom-bg); }
 
-/* =====================================================
-   PERFIL — TELA EXPANDIDA
-   ===================================================== */
-body.page-perfil { display: block; align-items: unset; background: var(--bg); }
 
-.perfil-main {
-    max-width: 620px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 3rem;
+/* =====================================================
+   PERFIL — CARTÃO CENTRALIZADO
+   ===================================================== */
+body.page-perfil {
+    display: block;
+    min-height: 100vh;
+    background: var(--bg);
+    position: relative;
 }
 
-/* ── Hero card ── */
-.perfil-hero {
+/* Botão voltar — canto superior esquerdo fixo */
+.btn-voltar-perfil {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 100;
+    width: auto;
+    padding: 8px 14px;
+    background: var(--bg-card);
+    color: var(--marrom);
+    border: 1.5px solid var(--marrom-borda);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.18s;
+}
+.btn-voltar-perfil:hover { background: var(--marrom-bg); }
+
+/* Overlay de fundo com blur suave */
+.perfil-overlay {
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    gap: 24px;
-    background: var(--bg-card);
-    border: 1.5px solid var(--borda);
-    border-radius: 16px;
-    padding: 28px 28px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 12px rgba(137,81,41,0.07);
+    justify-content: center;
+    padding: 80px 16px 40px;
+    background: linear-gradient(160deg, rgba(128,239,128,0.10) 0%, rgba(137,81,41,0.06) 100%);
 }
 
-/* Avatar */
-.perfil-avatar-wrap {
+/* Cartão principal */
+.perfil-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    border: 1.5px solid var(--borda);
+    padding: 40px 36px 32px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    box-shadow: 0 8px 32px rgba(137,81,41,0.10);
+}
+
+/* Foto de perfil */
+.perfil-foto-wrap {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
-    cursor: pointer;
-    flex-shrink: 0;
     border: 3px solid var(--verde);
     overflow: hidden;
+    cursor: pointer;
     background: var(--bg-input);
+    margin-bottom: 16px;
+    flex-shrink: 0;
 }
-.perfil-avatar {
+.perfil-foto-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    display: none;
 }
-.perfil-avatar-placeholder {
+.perfil-foto-placeholder {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--borda-forte);
-    background: var(--bg-input);
 }
-.perfil-avatar-overlay {
+.perfil-foto-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(137,81,41,0.55);
+    background: rgba(137,81,41,0.60);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 4px;
     opacity: 0;
     transition: opacity 0.2s;
-    border-radius: 50%;
 }
-.perfil-avatar-wrap:hover .perfil-avatar-overlay { opacity: 1; }
+.perfil-foto-overlay span { font-size: 11px; color: white; font-weight: 600; }
+.perfil-foto-wrap:hover .perfil-foto-overlay { opacity: 1; }
+.perfil-foto-wrap input[type=file] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
 
-/* Hero info */
-.perfil-hero-info { flex: 1; min-width: 0; }
-.perfil-hero-info h1 {
+/* Badge tipo */
+.perfil-badge-tipo {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.perfil-badge-tipo.tipo-ong      { background: var(--verde-bg); color: var(--verde-escuro); border: 1px solid var(--verde-borda); }
+.perfil-badge-tipo.tipo-adotante { background: var(--marrom-bg); color: var(--marrom); border: 1px solid var(--marrom-borda); }
+
+/* Nome */
+.perfil-nome {
     font-size: 22px;
     font-weight: 700;
     color: var(--marrom);
-    margin: 6px 0 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.perfil-email-hero {
-    font-size: 13px;
-    color: var(--texto-muted);
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Badge de tipo */
-.perfil-tipo-badge {
-    display: inline-block;
+/* Divisor */
+.perfil-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--borda);
+    margin: 4px 0 20px;
+}
+
+/* Bloco de informações */
+.perfil-infos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 4px;
+}
+.perfil-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+.pi-label {
     font-size: 11px;
     font-weight: 700;
-    padding: 3px 12px;
-    border-radius: 20px;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
-}
-.perfil-tipo-badge.tipo-ong {
-    background: var(--verde-bg);
-    color: var(--verde-escuro);
-    border: 1px solid var(--verde-borda);
-}
-.perfil-tipo-badge.tipo-adotante {
-    background: var(--marrom-bg);
-    color: var(--marrom);
-    border: 1px solid var(--marrom-borda);
-}
-
-/* ── Seção genérica ── */
-.perfil-section {
-    background: var(--bg-card);
-    border: 1.5px solid var(--borda);
-    border-radius: 14px;
-    padding: 22px 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 6px rgba(137,81,41,0.05);
-}
-.perfil-section-title {
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--marrom);
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--verde);
-}
-
-/* ── Campos de dados ── */
-.perfil-campos { display: flex; flex-direction: column; gap: 0; }
-.perfil-campo {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 11px 0;
-    border-bottom: 1px solid var(--bg-input);
-}
-.perfil-campo:last-child { border-bottom: none; padding-bottom: 0; }
-.campo-label {
-    font-size: 12px;
-    font-weight: 700;
+    letter-spacing: 0.05em;
     color: var(--texto-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    padding-top: 2px;
-    min-width: 130px;
 }
-.campo-valor {
-    font-size: 14px;
+.pi-valor {
+    font-size: 15px;
     color: var(--texto);
-    text-align: right;
+    text-align: center;
     word-break: break-word;
 }
 
-/* ── Lista de interesses ── */
-.interesses-lista { display: flex; flex-direction: column; gap: 10px; }
-.interesse-item {
+/* Seção solicitações */
+.perfil-sec-titulo {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--marrom);
+    text-align: center;
+    margin-bottom: 12px;
+}
+.perfil-interesses {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+.pi-interesse {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
+    padding: 10px 14px;
     background: var(--bg);
     border: 1.5px solid var(--borda);
     border-radius: 10px;
     cursor: pointer;
     transition: border-color 0.15s, background 0.15s;
 }
-.interesse-item:hover { border-color: var(--verde); background: var(--verde-bg); }
-.interesse-info { display: flex; flex-direction: column; gap: 3px; }
-.interesse-nome   { font-size: 15px; font-weight: 600; color: var(--marrom); }
-.interesse-detalhe { font-size: 12px; color: var(--texto-muted); }
-.interesse-status {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
-    white-space: nowrap;
-}
+.pi-interesse:hover { border-color: var(--verde); background: var(--verde-bg); }
+.pi-i-nome { font-size: 14px; font-weight: 600; color: var(--marrom); }
+.pi-i-esp  { font-size: 12px; color: var(--texto-muted); }
 
-/* ── Ações ── */
-.perfil-acoes { margin-top: 8px; }
-.btn-sair {
+/* Botão sair */
+.perfil-btn-sair {
     width: 100%;
     padding: 12px;
     background: transparent;
     color: var(--erro);
-    border: 1.5px solid rgba(192,57,43,0.3);
+    border: 1.5px solid rgba(192,57,43,0.28);
+    border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
-    border-radius: 10px;
     cursor: pointer;
+    margin-top: 4px;
     transition: background 0.18s, border-color 0.18s;
-    margin: 0;
 }
-.btn-sair:hover { background: rgba(192,57,43,0.07); border-color: var(--erro); }
+.perfil-btn-sair:hover { background: rgba(192,57,43,0.07); border-color: var(--erro); }

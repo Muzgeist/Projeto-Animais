@@ -1,72 +1,51 @@
 const sess = getSession();
-if (!sess) window.location.href = 'index.html';
+if (!sess) { window.location.href = 'index.html'; }
 
 // ── Preenche dados ──────────────────────────────────────────
-const tipoLabel = sess.tipo === 'ong' ? 'ONG' : 'Adotante';
-const tipoClass = sess.tipo === 'ong' ? 'tipo-ong' : 'tipo-adotante';
-
-document.getElementById('tipoBadge').textContent = tipoLabel;
-document.getElementById('tipoBadge').className   = 'perfil-tipo-badge ' + tipoClass;
-document.getElementById('perfilNome').textContent  = sess.nome;
-document.getElementById('perfilEmail').textContent = sess.email;
-document.getElementById('dadoNome').textContent     = sess.nome;
-document.getElementById('dadoEmail').textContent    = sess.email;
-document.getElementById('dadoTelefone').textContent = sess.telefone || '—';
-document.getElementById('dadoEndereco').textContent = sess.endereco || '—';
+const isOng = sess.tipo === 'ong';
+document.getElementById('tipoBadge').textContent = isOng ? 'ONG' : 'Adotante';
+document.getElementById('tipoBadge').className   = 'perfil-badge-tipo ' + (isOng ? 'tipo-ong' : 'tipo-adotante');
+document.getElementById('perfilNome').textContent = sess.nome;
+document.getElementById('pEmail').textContent     = sess.email;
+document.getElementById('pTelefone').textContent  = sess.telefone || '—';
+document.getElementById('pEndereco').textContent  = sess.endereco || '—';
 
 // ── Foto de perfil ──────────────────────────────────────────
-function carregarFotoPerfil(url) {
-    const img         = document.getElementById('avatarImg');
-    const placeholder = document.getElementById('avatarPlaceholder');
-    if (url) {
-        img.src = url;
-        img.style.display = 'block';
-        placeholder.style.display = 'none';
-    } else {
-        img.style.display = 'none';
-        placeholder.style.display = 'flex';
-    }
+function aplicarFoto(url) {
+    const img = document.getElementById('avatarImg');
+    const ph  = document.getElementById('avatarPlaceholder');
+    if (url) { img.src = url; img.style.display = 'block'; ph.style.display = 'none'; }
+    else     { img.style.display = 'none'; ph.style.display = 'flex'; }
 }
-carregarFotoPerfil(sess.foto_url || null);
+aplicarFoto(sess.foto_url || null);
 
 document.getElementById('inputFotoPerfil').addEventListener('change', function () {
-    const file = this.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        const dataUrl = e.target.result;
-        carregarFotoPerfil(dataUrl);
-        updateSession({ foto_url: dataUrl });
+    const file = this.files[0]; if (!file) return;
+    new FileReader().onload = e => {
+        aplicarFoto(e.target.result);
+        updateSession(sess.id, { foto_url: e.target.result });
     };
-    reader.readAsDataURL(file);
+    const r = new FileReader();
+    r.onload = e => { aplicarFoto(e.target.result); updateSession(sess.id, { foto_url: e.target.result }); };
+    r.readAsDataURL(file);
 });
 
-// ── Interesses (adotante) ───────────────────────────────────
-if (sess.tipo === 'adotante') {
-    const interesses = getInteresses().filter(i => i.usuario_id === sess.id);
-    if (interesses.length > 0) {
-        const secao = document.getElementById('secaoInteresses');
+// ── Interesses ──────────────────────────────────────────────
+if (!isOng) {
+    const meus = getInteresses().filter(i => i.usuario_id === sess.id);
+    if (meus.length) {
+        document.getElementById('secaoInteresses').style.display = '';
         const lista = document.getElementById('listaInteresses');
-        secao.style.display = '';
-        interesses.forEach(i => {
-            const animal = getAnimalById(i.animal_id);
-            if (!animal) return;
-            const item = document.createElement('div');
-            item.className = 'interesse-item';
-            item.onclick   = () => window.location.href = `animal.html?id=${animal.id}`;
-            item.innerHTML = `
-                <div class="interesse-info">
-                    <span class="interesse-nome">${animal.nome}</span>
-                    <span class="interesse-detalhe">${animal.especie === 'cao' ? 'Cachorro' : animal.especie === 'gato' ? 'Gato' : animal.especie} · ${animal.raca || 'SRD'}</span>
-                </div>
-                <span class="interesse-status badge-disponivel">Solicitado</span>
-            `;
-            lista.appendChild(item);
+        meus.forEach(i => {
+            const a = getAnimalById(i.animal_id);
+            if (!a) return;
+            const el = document.createElement('div');
+            el.className = 'pi-interesse';
+            el.onclick   = () => window.location.href = `animal.html?id=${a.id}`;
+            el.innerHTML = `<span class="pi-i-nome">${a.nome}</span><span class="pi-i-esp">${a.raca || a.especie}</span>`;
+            lista.appendChild(el);
         });
     }
 }
 
-function sair() {
-    clearSession();
-    window.location.href = 'index.html';
-}
+function sair() { clearSession(); window.location.href = 'index.html'; }

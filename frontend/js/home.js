@@ -23,12 +23,11 @@ function placeholderSVG() {
 }
 
 function criarCard(animal) {
-    const st  = LABEL_STATUS[animal.status] || { texto: animal.status, css: '' };
-    const esp = LABEL_ESPECIE[animal.especie] || animal.especie;
+    const st   = LABEL_STATUS[animal.status] || { texto: animal.status, css: '' };
+    const esp  = LABEL_ESPECIE[animal.especie] || animal.especie;
     const foto = animal.foto_url
-        ? `<img class="card-foto" src="${animal.foto_url}" alt="Foto de ${animal.nome}">`
+        ? `<img class="card-foto" src="${animal.foto_url}" alt="${animal.nome}">`
         : placeholderSVG();
-
     const card = document.createElement('div');
     card.className = 'card-animal';
     card.onclick = () => window.location.href = `animal.html?id=${animal.id}`;
@@ -38,8 +37,7 @@ function criarCard(animal) {
             <h3>${animal.nome}</h3>
             <p>${esp}${animal.raca ? ' · ' + animal.raca : ''}</p>
             <span class="badge-card ${st.css}">${st.texto}</span>
-        </div>
-    `;
+        </div>`;
     return card;
 }
 
@@ -49,20 +47,14 @@ function renderizarSecao(faixa, lista) {
     const badge = document.getElementById('badge-' + faixa);
     grid.innerHTML = '';
     badge.textContent = lista.length;
-
-    if (!lista.length) {
-        secao.style.display = 'none';
-        return;
-    }
+    if (!lista.length) { secao.style.display = 'none'; return; }
     secao.style.display = '';
     lista.forEach(a => grid.appendChild(criarCard(a)));
 }
 
 function renderizar() {
     const especie = document.getElementById('filtroEspecie').value;
-    const filtros = especie ? { especie } : {};
-    const lista   = getAnimais(filtros);
-
+    const lista   = getAnimais(especie ? { especie } : {});
     renderizarSecao('filhotes', lista.filter(a => a.faixa_etaria === 'filhote'));
     renderizarSecao('adultos',  lista.filter(a => a.faixa_etaria === 'adulto'));
     renderizarSecao('idosos',   lista.filter(a => a.faixa_etaria === 'idoso'));

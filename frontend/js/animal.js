@@ -18,6 +18,7 @@ function formatarData(iso) {
 
 function render(animal) {
     const st = LABEL_STATUS[animal.status] || { texto: animal.status, css: '' };
+    const jaAdotado = animal.status === 'adotado';
 
     const fotoHtml = animal.foto_url
         ? `<img src="${animal.foto_url}" alt="Foto de ${animal.nome}">`
@@ -35,12 +36,20 @@ function render(animal) {
         : '';
 
     let btnHtml = '';
-    const jaAdotado = animal.status === 'adotado';
     if (!jaAdotado) {
         if (!sess) {
             btnHtml = `<button class="btn-adotar" onclick="window.location.href='index.html'">Entrar para adotar</button>`;
         } else if (sess.tipo !== 'ong') {
-            btnHtml = `<button class="btn-adotar" id="btnAdotar" onclick="adotar()">Adotar</button>`;
+            const jaInteressado = getInteresses().some(i => i.usuario_id === sess.id && i.animal_id === Number(animalId));
+            if (jaInteressado) {
+                btnHtml = `<div class="confirmacao" id="confirmacao">
+                    <div class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" width="24" height="24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                    <p>Solicitação enviada!</p>
+                    <span>Sua solicitação foi encaminhada ao abrigo responsável.</span>
+                </div>`;
+            } else {
+                btnHtml = `<button class="btn-adotar" id="btnAdotar" onclick="adotar()">Adotar</button>`;
+            }
         }
     }
 
@@ -65,14 +74,11 @@ function render(animal) {
             <p class="desc-text">${animal.descricao || 'Sem descrição.'}</p>
         </div>
         <div class="confirmacao hidden" id="confirmacao">
-            <div class="check-circle">
-                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" width="24" height="24"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
+            <div class="check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" width="24" height="24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <p>Solicitação enviada!</p>
             <span>Sua solicitação foi encaminhada ao abrigo responsável.</span>
         </div>
-        ${btnHtml}
-    `;
+        ${btnHtml}`;
 }
 
 function adotar() {
@@ -81,8 +87,9 @@ function adotar() {
     if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
     setTimeout(() => {
         if (btn) btn.style.display = 'none';
-        document.getElementById('confirmacao').classList.remove('hidden');
-    }, 700);
+        const conf = document.getElementById('confirmacao');
+        if (conf) conf.classList.remove('hidden');
+    }, 600);
 }
 
 const animal = getAnimalById(animalId);
