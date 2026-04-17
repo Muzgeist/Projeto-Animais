@@ -2,18 +2,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil – Abrigo</title>
+    <title>Yggdrasil – Perfil</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="page-perfil">
-
     <button class="btn-voltar-perfil" onclick="window.location.href='home.html'">← Voltar</button>
-
     <div class="perfil-overlay">
         <div class="perfil-card">
-
-            <!-- Foto -->
-            <div class="perfil-foto-wrap" onclick="document.getElementById('inputFotoPerfil').click()" title="Clique para alterar a foto">
+            <div class="perfil-foto-wrap" onclick="document.getElementById('inputFotoPerfil').click()" title="Alterar foto">
                 <img id="avatarImg" class="perfil-foto-img" alt="Foto de perfil">
                 <div id="avatarPlaceholder" class="perfil-foto-placeholder">
                     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" width="44" height="44">
@@ -29,46 +25,23 @@
                 </div>
                 <input type="file" id="inputFotoPerfil" accept="image/*">
             </div>
-
-            <!-- Badge tipo -->
             <div id="tipoBadge" class="perfil-badge-tipo"></div>
-
-            <!-- Nome -->
             <h1 id="perfilNome" class="perfil-nome"></h1>
-
             <div class="perfil-divider"></div>
-
-            <!-- Infos -->
             <div class="perfil-infos">
-                <div class="perfil-info-item">
-                    <span class="pi-label">Email</span>
-                    <span class="pi-valor" id="pEmail"></span>
-                </div>
-                <div class="perfil-info-item">
-                    <span class="pi-label">Telefone</span>
-                    <span class="pi-valor" id="pTelefone"></span>
-                </div>
-                <div class="perfil-info-item">
-                    <span class="pi-label">Endereço</span>
-                    <span class="pi-valor" id="pEndereco"></span>
-                </div>
+                <div class="perfil-info-item"><span class="pi-label">Email</span><span class="pi-valor" id="pEmail"></span></div>
+                <div class="perfil-info-item"><span class="pi-label">Telefone</span><span class="pi-valor" id="pTelefone"></span></div>
+                <div class="perfil-info-item"><span class="pi-label">Endereço</span><span class="pi-valor" id="pEndereco"></span></div>
             </div>
-
-            <!-- Solicitações (só adotante) -->
             <div id="secaoInteresses" style="display:none; width:100%">
                 <div class="perfil-divider"></div>
                 <p class="perfil-sec-titulo">Minhas solicitações</p>
                 <div id="listaInteresses" class="perfil-interesses"></div>
             </div>
-
             <div class="perfil-divider"></div>
-
-            <!-- Sair -->
             <button class="perfil-btn-sair" onclick="sair()">Sair da conta</button>
-
         </div>
     </div>
-
 <script src="../js/dados.js"></script>
 <script src="../js/perfil.js"></script>
 </body>

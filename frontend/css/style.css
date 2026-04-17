@@ -1,30 +1,25 @@
 /* =====================================================
-   PALETA
-   Branco:      #FFFFFF / #F5F5F0 (fundo)
-   Verde claro: #80EF80  (primária)
-   Marrom:      #895129  (destaque / texto escuro)
-   Texto:       #2C1A0E  (quase preto quentinho)
-   Superfície:  #FFFDF8 / #F0EDE6
+   YGGDRASIL — Sistema de Adoção de Animais
+   Paleta: Branco #F5F3EE · Verde #80EF80 · Marrom #895129
    ===================================================== */
 
 :root {
-    --verde:       #80EF80;
-    --verde-escuro:#4db84d;
-    --verde-bg:    rgba(128,239,128,0.13);
-    --verde-borda: rgba(128,239,128,0.35);
-    --marrom:      #895129;
-    --marrom-bg:   rgba(137,81,41,0.10);
-    --marrom-borda:rgba(137,81,41,0.30);
-    --bg:          #F5F3EE;
-    --bg-card:     #FFFFFF;
-    --bg-input:    #F0EDE6;
-    --texto:       #2C1A0E;
-    --texto-muted: #7A6555;
-    --borda:       #D9D0C4;
-    --borda-forte: #C4B8AA;
-    --erro:        #C0392B;
-    --warning-bg:  rgba(137,81,41,0.08);
-    --warning-borda:rgba(137,81,41,0.28);
+    --verde:        #80EF80;
+    --verde-esc:    #4db84d;
+    --verde-bg:     rgba(128,239,128,0.13);
+    --verde-borda:  rgba(128,239,128,0.35);
+    --marrom:       #895129;
+    --marrom-esc:   #6e3f1e;
+    --marrom-bg:    rgba(137,81,41,0.10);
+    --marrom-borda: rgba(137,81,41,0.30);
+    --bg:           #F5F3EE;
+    --bg-card:      #FFFFFF;
+    --bg-input:     #EDE9E0;
+    --texto:        #2C1A0E;
+    --texto-muted:  #7A6555;
+    --borda:        #D9D0C4;
+    --borda-forte:  #C4B8AA;
+    --erro:         #C0392B;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,198 +28,235 @@ body {
     font-family: Arial, sans-serif;
     background: var(--bg);
     color: var(--texto);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ─── DECORAÇÃO: galhos nas bordas (SVG inline via pseudo-elemento) ─── */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    width: 260px;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.13;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* galho esquerdo */
+body::before {
+    left: 0;
+    background-position: left top;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 900' fill='none'%3E%3C!-- tronco principal --%3E%3Cpath d='M-10 900 Q20 700 10 500 Q0 300 40 100' stroke='%23895129' stroke-width='14' stroke-linecap='round'/%3E%3C!-- galho alto direita --%3E%3Cpath d='M30 180 Q90 120 160 80 Q200 60 240 30' stroke='%23895129' stroke-width='7' stroke-linecap='round'/%3E%3C!-- galho alto esquerda --%3E%3Cpath d='M25 220 Q-10 170 -30 120' stroke='%23895129' stroke-width='5' stroke-linecap='round'/%3E%3C!-- galho meio --%3E%3Cpath d='M15 420 Q70 370 130 330 Q180 300 230 270' stroke='%23895129' stroke-width='8' stroke-linecap='round'/%3E%3C!-- sub-galho meio --%3E%3Cpath d='M80 355 Q100 310 120 270' stroke='%23895129' stroke-width='4' stroke-linecap='round'/%3E%3C!-- galho baixo --%3E%3Cpath d='M5 650 Q60 600 120 570 Q170 550 210 520' stroke='%23895129' stroke-width='6' stroke-linecap='round'/%3E%3C!-- folhas (círculos) --%3E%3Ccircle cx='240' cy='30' r='18' fill='%2380EF80' opacity='0.5'/%3E%3Ccircle cx='210' cy='50' r='12' fill='%2380EF80' opacity='0.4'/%3E%3Ccircle cx='160' cy='78' r='15' fill='%2380EF80' opacity='0.45'/%3E%3Ccircle cx='230' cy='270' r='20' fill='%2380EF80' opacity='0.5'/%3E%3Ccircle cx='180' cy='295' r='13' fill='%2380EF80' opacity='0.4'/%3E%3Ccircle cx='130' cy='325' r='16' fill='%2380EF80' opacity='0.45'/%3E%3Ccircle cx='210' cy='520' r='17' fill='%2380EF80' opacity='0.45'/%3E%3Ccircle cx='170' cy='545' r='11' fill='%2380EF80' opacity='0.4'/%3E%3Ccircle cx='120' cy='270' r='10' fill='%2380EF80' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* galho direito (espelhado) */
+body::after {
+    right: 0;
+    background-position: right top;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 900' fill='none'%3E%3Cpath d='M270 900 Q240 700 250 500 Q260 300 220 100' stroke='%23895129' stroke-width='14' stroke-linecap='round'/%3E%3Cpath d='M230 180 Q170 120 100 80 Q60 60 20 30' stroke='%23895129' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M235 220 Q270 170 290 120' stroke='%23895129' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M245 420 Q190 370 130 330 Q80 300 30 270' stroke='%23895129' stroke-width='8' stroke-linecap='round'/%3E%3Cpath d='M180 355 Q160 310 140 270' stroke='%23895129' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M255 650 Q200 600 140 570 Q90 550 50 520' stroke='%23895129' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='30' r='18' fill='%2380EF80' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='12' fill='%2380EF80' opacity='0.4'/%3E%3Ccircle cx='100' cy='78' r='15' fill='%2380EF80' opacity='0.45'/%3E%3Ccircle cx='30' cy='270' r='20' fill='%2380EF80' opacity='0.5'/%3E%3Ccircle cx='80' cy='295' r='13' fill='%2380EF80' opacity='0.4'/%3E%3Ccircle cx='130' cy='325' r='16' fill='%2380EF80' opacity='0.45'/%3E%3Ccircle cx='50' cy='520' r='17' fill='%2380EF80' opacity='0.45'/%3E%3Ccircle cx='90' cy='545' r='11' fill='%2380EF80' opacity='0.4'/%3E%3Ccircle cx='140' cy='270' r='10' fill='%2380EF80' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+/* tudo acima dos galhos */
+body > * { position: relative; z-index: 1; }
+
+/* ─── LAYOUT BASE ─── */
+.page-centered {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-body.page-home,
-body.page-animal,
-body.page-form {
-    display: block;
-    align-items: unset;
-}
-
-/* =====================================================
-   UTILITÁRIOS
-   ===================================================== */
+/* ─── UTILITÁRIOS ─── */
 .hidden { display: none !important; }
-.erro    { color: var(--erro);  font-size: 13px; margin: 6px 0; }
-.sucesso { color: var(--verde-escuro); font-size: 13px; margin: 6px 0; }
+.erro    { color: var(--erro);     font-size: 13px; margin: 6px 0; }
+.sucesso { color: var(--verde-esc); font-size: 13px; margin: 6px 0; }
 .req     { color: var(--erro); }
 
-/* =====================================================
-   TIPOGRAFIA
-   ===================================================== */
-h1, h2, h3 { color: var(--texto); }
+/* ─── HEADER ─── */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px;
+    background: var(--bg-card);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 2px solid var(--verde);
+    box-shadow: 0 2px 8px rgba(137,81,41,0.08);
+}
+.header-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--marrom);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.header-logo span { color: var(--verde-esc); }
+header > div { display: flex; gap: 8px; align-items: center; }
+#saudacao { font-size: 13px; color: var(--texto-muted); }
 
-/* =====================================================
-   BOTÕES GLOBAIS
-   ===================================================== */
+/* ─── BOTÕES ─── */
 button {
-    padding: 10px 16px;
+    padding: 9px 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
     background: var(--marrom);
     color: #fff;
     cursor: pointer;
     font-size: 14px;
     font-family: Arial, sans-serif;
-    transition: background 0.18s, opacity 0.18s;
+    font-weight: 600;
+    transition: background 0.18s, opacity 0.15s;
 }
-button:hover  { background: #6e3f1e; }
-button:active { opacity: 0.8; }
+button:hover  { background: var(--marrom-esc); }
+button:active { opacity: 0.78; }
 
-.perfil-btn {
-    width: auto;
+.btn-outline {
     background: transparent;
     color: var(--marrom);
     border: 1.5px solid var(--marrom-borda);
-    padding: 7px 14px;
-    font-weight: bold;
 }
-.perfil-btn:hover { background: var(--marrom-bg); }
+.btn-outline:hover { background: var(--marrom-bg); }
 
-/* =====================================================
-   INPUTS / SELECT / TEXTAREA GLOBAIS
-   ===================================================== */
+.btn-verde { background: var(--verde-esc); }
+.btn-verde:hover { background: #3da63d; }
+
+#btnCadastrarAnimal { background: var(--verde-esc); }
+#btnCadastrarAnimal:hover { background: #3da63d; }
+
+/* ─── INPUTS ─── */
 input, select, textarea {
     width: 100%;
-    padding: 10px 12px;
+    padding: 10px 13px;
     border: 1.5px solid var(--borda);
-    border-radius: 6px;
+    border-radius: 7px;
     background: var(--bg-input);
     color: var(--texto);
     font-size: 15px;
     font-family: Arial, sans-serif;
     transition: border-color 0.18s;
 }
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--verde-escuro);
-}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--verde-esc); }
 input::placeholder, textarea::placeholder { color: var(--texto-muted); opacity: 0.7; }
 textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
 
-/* =====================================================
-   HEADER
-   ===================================================== */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 24px;
-    background: var(--bg-card);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    border-bottom: 1.5px solid var(--borda);
-    box-shadow: 0 1px 4px rgba(137,81,41,0.07);
-}
-header div   { display: flex; gap: 8px; }
-#saudacao    { font-size: 14px; color: var(--texto-muted); }
-
-/* =====================================================
-   CONTAINER (login / cadastro / perfil)
-   ===================================================== */
+/* ─── CONTAINER LOGIN / CADASTRO ─── */
 .container {
     background: var(--bg-card);
-    padding: 36px 30px;
-    border-radius: 14px;
+    padding: 38px 32px;
+    border-radius: 16px;
     width: 360px;
     text-align: center;
     border: 1.5px solid var(--borda);
-    box-shadow: 0 2px 16px rgba(137,81,41,0.08);
+    box-shadow: 0 4px 24px rgba(137,81,41,0.10);
 }
-.container h2 {
-    margin-bottom: 6px;
+.container-logo {
+    font-size: 26px;
+    font-weight: 700;
     color: var(--marrom);
-    font-size: 22px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
 }
-.container .subtitulo {
-    font-size: 13px;
-    color: var(--texto-muted);
-    margin-bottom: 20px;
-}
-.container input,
-.container select { margin: 7px 0; }
-.container button  { width: 100%; margin-top: 12px; padding: 12px; font-size: 15px; background: var(--verde-escuro); }
-.container button:hover { background: #3da63d; }
+.container-logo span { color: var(--verde-esc); }
+.container-sub { font-size: 13px; color: var(--texto-muted); margin-bottom: 22px; }
+.container input, .container select { margin: 6px 0; }
+.container > .btn-verde { width: 100%; margin-top: 14px; padding: 12px; font-size: 15px; }
 
-.btn-link {
-    color: var(--marrom);
-    text-decoration: none;
-    font-weight: bold;
-    transition: opacity 0.2s;
-}
+.btn-link { color: var(--marrom); text-decoration: none; font-weight: 700; }
 .btn-link:hover { opacity: 0.7; }
 .cadastro-texto { margin-top: 16px; font-size: 14px; color: var(--texto-muted); }
 
-/* =====================================================
-   HOME — MAIN
-   ===================================================== */
-main {
-    padding: 28px 24px;
-    max-width: 980px;
-    margin: 0 auto;
+/* ─── BANNER BOAS-VINDAS (home) ─── */
+.banner-bv {
+    background: linear-gradient(100deg, var(--marrom) 0%, #6e3f1e 100%);
+    color: #fff;
+    border-radius: 14px;
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 18px rgba(137,81,41,0.18);
+    position: relative;
+    overflow: hidden;
 }
-main > h1 {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--marrom);
-    margin-bottom: 20px;
+.banner-bv::before {
+    content: '';
+    position: absolute;
+    right: -30px;
+    top: -30px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: rgba(128,239,128,0.15);
+}
+.banner-bv::after {
+    content: '';
+    position: absolute;
+    right: 30px;
+    bottom: -40px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: rgba(128,239,128,0.10);
+}
+.banner-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+.banner-texto { position: relative; z-index: 1; }
+.banner-texto h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 3px;
+}
+.banner-texto p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
 }
 
-/* Filtros */
-.filtros {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    align-items: center;
-}
+/* ─── HOME MAIN ─── */
+body.page-home { display: block; }
+main { padding: 28px 24px; max-width: 980px; margin: 0 auto; }
+main > h1 { font-size: 20px; font-weight: 700; color: var(--marrom); margin-bottom: 20px; }
+
+.filtros { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; align-items: center; }
 .filtros select { flex: 1; min-width: 180px; margin: 0; }
-.filtros button { width: auto; margin: 0; padding: 10px 22px; background: var(--marrom); }
-.filtros button:hover { background: #6e3f1e; }
+.filtros button { width: auto; margin: 0; padding: 10px 22px; }
 
 /* Seções faixa etária */
-.secao {
-    margin-bottom: 36px;
-}
+.secao { margin-bottom: 36px; }
 .secao-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--verde);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px; padding-bottom: 8px;
+    border-bottom: 2.5px solid var(--verde);
 }
-.secao-titulo {
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--marrom);
-}
+.secao-titulo { font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--marrom); }
 .secao-badge {
-    font-size: 11px;
-    background: var(--verde-bg);
-    color: var(--verde-escuro);
+    font-size: 11px; font-weight: 700;
+    background: var(--verde-bg); color: var(--verde-esc);
     border: 1px solid var(--verde-borda);
-    border-radius: 20px;
-    padding: 2px 9px;
-    font-weight: 600;
+    border-radius: 20px; padding: 2px 9px;
 }
 
-/* Grid de cards */
+/* Grid cards */
 .grid-animais {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 14px;
 }
-
-/* Card animal */
 .card-animal {
     background: var(--bg-card);
     border-radius: 12px;
@@ -234,107 +266,50 @@ main > h1 {
     transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 .card-animal:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(137,81,41,0.13);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(137,81,41,0.14);
     border-color: var(--verde);
 }
-
-.card-foto {
-    width: 100%;
-    height: 145px;
-    object-fit: cover;
-    display: block;
-    background: var(--bg-input);
-}
+.card-foto { width: 100%; height: 145px; object-fit: cover; display: block; background: var(--bg-input); }
 .card-foto-placeholder {
-    width: 100%;
-    height: 145px;
+    width: 100%; height: 145px;
     background: var(--bg-input);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--borda-forte);
+    display: flex; align-items: center; justify-content: center; color: var(--borda-forte);
 }
 .card-foto-placeholder svg { width: 38px; height: 38px; }
+.card-body { padding: 12px 13px 14px; }
+.card-body h3 { font-size: 15px; font-weight: 700; color: var(--marrom); margin-bottom: 4px; }
+.card-body p  { font-size: 12px; color: var(--texto-muted); margin: 2px 0; }
 
-.card-body { padding: 13px 14px 15px; }
-.card-body h3 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--marrom);
-    margin-bottom: 4px;
-}
-.card-body p { font-size: 12px; color: var(--texto-muted); margin: 2px 0; }
+.badge-card { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 12px; margin-top: 8px; }
+.badge-disponivel  { background: var(--verde-bg);  color: var(--verde-esc); border: 1px solid var(--verde-borda); }
+.badge-em_processo { background: var(--marrom-bg); color: var(--marrom);    border: 1px solid var(--marrom-borda); }
+.badge-adotado     { background: #EDE9E0; color: #9E8876; border: 1px solid var(--borda); }
 
-/* Badges de status */
-.badge-card {
-    display: inline-block;
-    font-size: 11px;
-    padding: 2px 9px;
-    border-radius: 12px;
-    margin-top: 8px;
-    font-weight: 600;
-}
-.badge-disponivel  { background: var(--verde-bg);    color: var(--verde-escuro); border: 1px solid var(--verde-borda); }
-.badge-em_processo { background: var(--warning-bg);  color: var(--marrom);       border: 1px solid var(--warning-borda); }
-.badge-adotado     { background: #F0EDE6; color: #9E8876; border: 1px solid var(--borda); }
-
-.vazio { font-size: 14px; color: var(--texto-muted); padding: 6px 0; }
-
-/* Botão + Cadastrar Animal no header */
-#btnCadastrarAnimal {
-    background: var(--verde-escuro);
-    font-weight: bold;
-}
-#btnCadastrarAnimal:hover { background: #3da63d; }
-
-/* =====================================================
-   TELA ANIMAL
-   ===================================================== */
-.animal-main {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 3rem;
-}
+/* ─── TELA ANIMAL ─── */
+body.page-animal { display: block; }
+.animal-main { max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
 
 .foto-wrap {
-    width: 100%;
-    height: 320px;
-    border-radius: 12px;
-    background: var(--bg-input);
-    border: 1.5px solid var(--borda);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
+    width: 100%; height: 320px; border-radius: 14px;
+    background: var(--bg-input); border: 1.5px solid var(--borda);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem; overflow: hidden;
 }
 .foto-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.foto-placeholder {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 8px;
-    color: var(--borda-forte);
-}
-.foto-placeholder svg  { width: 48px; height: 48px; }
+.foto-placeholder { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--borda-forte); }
+.foto-placeholder svg { width: 48px; height: 48px; }
 .foto-placeholder span { font-size: 13px; }
 
 .nome-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
 .nome-row h1 { font-size: 24px; font-weight: 700; color: var(--marrom); }
-
-.badge { font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
-.badge.badge-disponivel  { background: var(--verde-bg);   color: var(--verde-escuro); border: 1px solid var(--verde-borda); }
-.badge.badge-em_processo { background: var(--warning-bg); color: var(--marrom);       border: 1px solid var(--warning-borda); }
-.badge.badge-adotado     { background: #F0EDE6; color: #9E8876; border: 1px solid var(--borda); }
-
+.badge { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.badge.badge-disponivel  { background: var(--verde-bg);  color: var(--verde-esc); border: 1px solid var(--verde-borda); }
+.badge.badge-em_processo { background: var(--marrom-bg); color: var(--marrom);    border: 1px solid var(--marrom-borda); }
+.badge.badge-adotado     { background: #EDE9E0; color: #9E8876; border: 1px solid var(--borda); }
 .ong-nome { font-size: 13px; color: var(--texto-muted); margin-bottom: 1.5rem; }
 
-.info-card {
-    background: var(--bg-card);
-    border: 1.5px solid var(--borda);
-    border-radius: 12px;
-    padding: 4px 16px;
-    margin-bottom: 1rem;
-}
+.info-card { background: var(--bg-card); border: 1.5px solid var(--borda); border-radius: 12px; padding: 4px 16px; margin-bottom: 1rem; }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .info-item { padding: 12px 0; border-bottom: 1px solid var(--bg-input); }
 .info-item:nth-last-child(-n+2) { border-bottom: none; }
@@ -343,78 +318,40 @@ main > h1 {
 .info-label { font-size: 12px; color: var(--texto-muted); margin-bottom: 4px; }
 .info-value { font-size: 15px; font-weight: 600; color: var(--texto); }
 
-.enf-card {
-    background: var(--warning-bg);
-    border: 1.5px solid var(--warning-borda);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 1rem;
-}
+.enf-card { background: var(--marrom-bg); border: 1.5px solid var(--marrom-borda); border-radius: 12px; padding: 14px 16px; margin-bottom: 1rem; }
 .enf-label { font-size: 12px; color: var(--marrom); margin-bottom: 5px; font-weight: 700; }
 .enf-text  { font-size: 14px; color: var(--marrom); line-height: 1.6; }
 
-.desc-card {
-    background: var(--bg-card);
-    border: 1.5px solid var(--borda);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-bottom: 1.5rem;
-}
+.desc-card { background: var(--bg-card); border: 1.5px solid var(--borda); border-radius: 12px; padding: 14px 16px; margin-bottom: 1.5rem; }
 .desc-label { font-size: 12px; color: var(--texto-muted); margin-bottom: 6px; }
 .desc-text  { font-size: 15px; line-height: 1.75; color: var(--texto); }
 
 .confirmacao {
-    display: flex; flex-direction: column;
-    align-items: center; gap: 10px;
-    padding: 1.5rem;
-    background: var(--verde-bg);
-    border: 1.5px solid var(--verde-borda);
-    border-radius: 12px;
-    text-align: center;
-    margin-bottom: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 1.5rem; background: var(--verde-bg); border: 1.5px solid var(--verde-borda);
+    border-radius: 12px; text-align: center; margin-bottom: 0;
 }
-.check-circle {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: var(--verde-escuro);
-    display: flex; align-items: center; justify-content: center;
-}
-.confirmacao p    { font-size: 15px; font-weight: 700; color: var(--verde-escuro); }
-.confirmacao span { font-size: 13px; color: var(--verde-escuro); opacity: 0.8; }
+.check-circle { width: 48px; height: 48px; border-radius: 50%; background: var(--verde-esc); display: flex; align-items: center; justify-content: center; }
+.confirmacao p    { font-size: 15px; font-weight: 700; color: var(--verde-esc); }
+.confirmacao span { font-size: 13px; color: var(--verde-esc); opacity: 0.8; }
 
 .btn-adotar {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    background: var(--verde-escuro);
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.18s, opacity 0.15s;
-    margin-top: 0;
+    width: 100%; padding: 14px; border: none; border-radius: 10px;
+    background: var(--verde-esc); color: #fff; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: background 0.18s;
 }
-.btn-adotar:hover    { background: #3da63d; }
+.btn-adotar:hover { background: #3da63d; }
 .btn-adotar:disabled { opacity: 0.4; cursor: default; }
 
-/* =====================================================
-   FORMULÁRIO CADASTRAR ANIMAL
-   ===================================================== */
-.form-main {
-    max-width: 580px;
-    margin: 0 auto;
-    padding: 2rem 1rem 3rem;
-}
+/* ─── FORMULÁRIOS (cadastrar animal / cadastro) ─── */
+body.page-form { display: block; }
+.form-main { max-width: 580px; margin: 0 auto; padding: 2rem 1rem 3rem; }
 .form-card {
-    background: var(--bg-card);
-    border-radius: 14px;
-    padding: 28px;
-    border: 1.5px solid var(--borda);
-    box-shadow: 0 2px 12px rgba(137,81,41,0.06);
+    background: var(--bg-card); border-radius: 16px; padding: 28px;
+    border: 1.5px solid var(--borda); box-shadow: 0 2px 12px rgba(137,81,41,0.07);
 }
 .form-card h2 { font-size: 18px; font-weight: 700; color: var(--marrom); margin-bottom: 1.5rem; }
-.form-card > button { width: 100%; margin-top: 4px; padding: 13px; font-size: 15px; background: var(--verde-escuro); }
-.form-card > button:hover { background: #3da63d; }
+.form-card > .btn-verde { width: 100%; margin-top: 4px; padding: 13px; font-size: 15px; }
 
 .field { margin-bottom: 1.25rem; }
 .field label { display: block; font-size: 13px; color: var(--texto-muted); margin-bottom: 5px; font-weight: 600; }
@@ -425,262 +362,99 @@ main > h1 {
 .radio-group { display: flex; gap: 10px; }
 .radio-opt {
     flex: 1; padding: 9px; width: auto; margin: 0;
-    border: 1.5px solid var(--borda);
-    border-radius: 6px;
-    background: var(--bg-input);
-    color: var(--texto);
-    cursor: pointer; font-size: 15px;
+    border: 1.5px solid var(--borda); border-radius: 7px;
+    background: var(--bg-input); color: var(--texto);
+    cursor: pointer; font-size: 15px; font-weight: 600;
     transition: background 0.15s, border-color 0.15s;
 }
 .radio-opt.selected-sim { background: rgba(192,57,43,0.08); border-color: #C0392B; color: #C0392B; }
-.radio-opt.selected-nao { background: var(--verde-bg); border-color: var(--verde-escuro); color: var(--verde-escuro); }
+.radio-opt.selected-nao { background: var(--verde-bg); border-color: var(--verde-esc); color: var(--verde-esc); }
 
 .campo-enfermidade { margin-top: 12px; }
-.badge-obrig {
-    display: inline-block; font-size: 11px;
-    background: rgba(192,57,43,0.10); color: #C0392B;
-    border-radius: 4px; padding: 1px 7px;
-    margin-left: 6px; vertical-align: middle;
-}
+.badge-obrig { display: inline-block; font-size: 11px; background: rgba(192,57,43,0.10); color: #C0392B; border-radius: 4px; padding: 1px 7px; margin-left: 6px; vertical-align: middle; }
 .erro-campo { font-size: 12px; color: var(--erro); margin-top: 4px; }
 
-/* Upload de foto */
 .upload-area {
-    border: 2px dashed var(--borda-forte);
-    border-radius: 8px; padding: 22px;
-    text-align: center; cursor: pointer;
+    border: 2px dashed var(--borda-forte); border-radius: 8px; padding: 22px;
+    text-align: center; cursor: pointer; background: var(--bg-input); position: relative;
     transition: border-color 0.2s;
-    position: relative; background: var(--bg-input);
 }
-.upload-area:hover { border-color: var(--verde-escuro); }
-.upload-area input[type=file] {
-    position: absolute; inset: 0; opacity: 0;
-    cursor: pointer; width: 100%; height: 100%; margin: 0; padding: 0;
-}
+.upload-area:hover { border-color: var(--verde-esc); }
+.upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .upload-label { font-size: 13px; color: var(--texto-muted); }
 .upload-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 6px; margin-top: 10px; display: none; }
 
-/* =====================================================
-   PERFIL
-   ===================================================== */
-.perfil-tipo {
-    display: inline-block; font-size: 12px;
-    padding: 3px 10px; border-radius: 12px;
-    margin-bottom: 16px; font-weight: 600;
-}
-.tipo-ong      { background: var(--verde-bg);   color: var(--verde-escuro); border: 1px solid var(--verde-borda); }
-.tipo-adotante { background: var(--marrom-bg);  color: var(--marrom);       border: 1px solid var(--marrom-borda); }
+/* ─── PERFIL ─── */
+body.page-perfil { display: block; }
 
-.perfil-info { text-align: left; margin-bottom: 1rem; }
-.perfil-info p { font-size: 14px; padding: 9px 0; border-bottom: 1px solid var(--borda); color: var(--texto); }
-.perfil-info p:last-child { border-bottom: none; }
-.perfil-info strong { color: var(--texto-muted); font-weight: 600; font-size: 11px; display: block; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
-
-.btn-sair { background: var(--bg-input); color: var(--marrom); border: 1.5px solid var(--marrom-borda); width: 100%; margin-top: 4px; }
-.btn-sair:hover { background: var(--marrom-bg); }
-
-
-/* =====================================================
-   PERFIL — CARTÃO CENTRALIZADO
-   ===================================================== */
-body.page-perfil {
-    display: block;
-    min-height: 100vh;
-    background: var(--bg);
-    position: relative;
-}
-
-/* Botão voltar — canto superior esquerdo fixo */
 .btn-voltar-perfil {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 100;
-    width: auto;
-    padding: 8px 14px;
-    background: var(--bg-card);
-    color: var(--marrom);
-    border: 1.5px solid var(--marrom-borda);
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.18s;
+    position: fixed; top: 16px; left: 16px; z-index: 100;
+    width: auto; padding: 8px 14px;
+    background: var(--bg-card); color: var(--marrom);
+    border: 1.5px solid var(--marrom-borda); border-radius: 8px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: background 0.18s; box-shadow: 0 2px 8px rgba(137,81,41,0.10);
 }
 .btn-voltar-perfil:hover { background: var(--marrom-bg); }
 
-/* Overlay de fundo com blur suave */
 .perfil-overlay {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 80px 16px 40px;
-    background: linear-gradient(160deg, rgba(128,239,128,0.10) 0%, rgba(137,81,41,0.06) 100%);
 }
-
-/* Cartão principal */
 .perfil-card {
-    background: var(--bg-card);
-    border-radius: 20px;
-    border: 1.5px solid var(--borda);
-    padding: 40px 36px 32px;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    box-shadow: 0 8px 32px rgba(137,81,41,0.10);
+    background: var(--bg-card); border-radius: 20px;
+    border: 1.5px solid var(--borda); padding: 40px 36px 32px;
+    width: 100%; max-width: 400px;
+    display: flex; flex-direction: column; align-items: center;
+    box-shadow: 0 8px 36px rgba(137,81,41,0.12);
 }
 
-/* Foto de perfil */
 .perfil-foto-wrap {
-    position: relative;
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    border: 3px solid var(--verde);
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--bg-input);
-    margin-bottom: 16px;
-    flex-shrink: 0;
+    position: relative; width: 110px; height: 110px;
+    border-radius: 50%; border: 3px solid var(--verde);
+    overflow: hidden; cursor: pointer; background: var(--bg-input);
+    margin-bottom: 16px; flex-shrink: 0;
 }
-.perfil-foto-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-}
-.perfil-foto-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--borda-forte);
-}
+.perfil-foto-img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.perfil-foto-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--borda-forte); }
 .perfil-foto-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(137,81,41,0.60);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    opacity: 0;
-    transition: opacity 0.2s;
+    position: absolute; inset: 0; background: rgba(137,81,41,0.60);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    opacity: 0; transition: opacity 0.2s;
 }
 .perfil-foto-overlay span { font-size: 11px; color: white; font-weight: 600; }
 .perfil-foto-wrap:hover .perfil-foto-overlay { opacity: 1; }
-.perfil-foto-wrap input[type=file] {
-    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-}
+.perfil-foto-wrap input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 
-/* Badge tipo */
-.perfil-badge-tipo {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 14px;
-    border-radius: 20px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-.perfil-badge-tipo.tipo-ong      { background: var(--verde-bg); color: var(--verde-escuro); border: 1px solid var(--verde-borda); }
-.perfil-badge-tipo.tipo-adotante { background: var(--marrom-bg); color: var(--marrom); border: 1px solid var(--marrom-borda); }
+.perfil-badge-tipo { font-size: 11px; font-weight: 700; padding: 3px 14px; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px; }
+.perfil-badge-tipo.tipo-ong      { background: var(--verde-bg);  color: var(--verde-esc); border: 1px solid var(--verde-borda); }
+.perfil-badge-tipo.tipo-adotante { background: var(--marrom-bg); color: var(--marrom);    border: 1px solid var(--marrom-borda); }
 
-/* Nome */
-.perfil-nome {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--marrom);
-    text-align: center;
-    margin-bottom: 20px;
-}
+.perfil-nome { font-size: 22px; font-weight: 700; color: var(--marrom); text-align: center; margin-bottom: 20px; }
 
-/* Divisor */
-.perfil-divider {
-    width: 100%;
-    height: 1px;
-    background: var(--borda);
-    margin: 4px 0 20px;
-}
+.perfil-divider { width: 100%; height: 1px; background: var(--borda); margin: 4px 0 20px; }
 
-/* Bloco de informações */
-.perfil-infos {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 4px;
-}
-.perfil-info-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-}
-.pi-label {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--texto-muted);
-}
-.pi-valor {
-    font-size: 15px;
-    color: var(--texto);
-    text-align: center;
-    word-break: break-word;
-}
+.perfil-infos { width: 100%; display: flex; flex-direction: column; gap: 14px; margin-bottom: 4px; }
+.perfil-info-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.pi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--texto-muted); }
+.pi-valor { font-size: 15px; color: var(--texto); text-align: center; word-break: break-word; }
 
-/* Seção solicitações */
-.perfil-sec-titulo {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--marrom);
-    text-align: center;
-    margin-bottom: 12px;
-}
-.perfil-interesses {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 4px;
-}
+.perfil-sec-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--marrom); text-align: center; margin-bottom: 12px; }
+.perfil-interesses { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
 .pi-interesse {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 14px;
-    background: var(--bg);
-    border: 1.5px solid var(--borda);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--bg); border: 1.5px solid var(--borda);
+    border-radius: 10px; cursor: pointer; transition: border-color 0.15s, background 0.15s;
 }
 .pi-interesse:hover { border-color: var(--verde); background: var(--verde-bg); }
 .pi-i-nome { font-size: 14px; font-weight: 600; color: var(--marrom); }
 .pi-i-esp  { font-size: 12px; color: var(--texto-muted); }
 
-/* Botão sair */
 .perfil-btn-sair {
-    width: 100%;
-    padding: 12px;
-    background: transparent;
-    color: var(--erro);
-    border: 1.5px solid rgba(192,57,43,0.28);
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 4px;
-    transition: background 0.18s, border-color 0.18s;
+    width: 100%; padding: 12px; background: transparent;
+    color: var(--erro); border: 1.5px solid rgba(192,57,43,0.28);
+    border-radius: 10px; font-size: 14px; font-weight: 600;
+    cursor: pointer; margin-top: 4px; transition: background 0.18s, border-color 0.18s;
 }
 .perfil-btn-sair:hover { background: rgba(192,57,43,0.07); border-color: var(--erro); }

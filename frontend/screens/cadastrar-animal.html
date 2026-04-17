@@ -2,13 +2,16 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Animal – Abrigo</title>
+    <title>Yggdrasil – Cadastrar Animal</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="page-form">
 <header>
-    <span id="saudacao"></span>
-    <button class="perfil-btn" onclick="window.location.href='home.html'">← Voltar</button>
+    <span class="header-logo">Ygg<span>drasil</span></span>
+    <div>
+        <span id="saudacao"></span>
+        <button class="btn-outline" onclick="window.location.href='home.html'">← Voltar</button>
+    </div>
 </header>
 <main class="form-main">
     <div class="form-card">
@@ -24,7 +27,6 @@
                 <img id="previewFoto" class="upload-preview" alt="Preview">
             </div>
         </div>
-
         <div class="field">
             <label for="nome">Nome <span class="req">*</span></label>
             <input type="text" id="nome" placeholder="Ex: Bolinha">
@@ -51,9 +53,7 @@
             <label for="dataNasc">Data de nascimento</label>
             <input type="date" id="dataNasc">
         </div>
-
         <hr class="divider">
-
         <div class="field">
             <label>Possui alguma enfermidade ou deficiência física? <span class="req">*</span></label>
             <div class="radio-group">
@@ -67,16 +67,13 @@
                 <p class="erro-campo hidden" id="erro-desc-enfermidade">Descreva a enfermidade.</p>
             </div>
         </div>
-
         <hr class="divider">
-
         <div class="field">
             <label for="descricao">Descrição <span class="req">*</span></label>
-            <textarea id="descricao" placeholder="Personalidade, comportamento, dá bem com crianças ou outros pets..."></textarea>
+            <textarea id="descricao" placeholder="Personalidade, comportamento, se dá bem com crianças ou outros pets..."></textarea>
             <p class="erro-campo hidden" id="erro-descricao">Escreva uma descrição.</p>
         </div>
-
-        <button id="btnCadastrar">Cadastrar animal</button>
+        <button class="btn-verde" id="btnCadastrar" style="width:100%;padding:13px;font-size:15px;margin-top:4px;">Cadastrar animal</button>
     </div>
 </main>
 <script src="../js/dados.js"></script>

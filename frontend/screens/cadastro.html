@@ -2,30 +2,32 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro – Abrigo</title>
+    <title>Yggdrasil – Cadastro</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<div class="container">
-    <h2>Cadastro</h2>
-    <p class="subtitulo">Crie sua conta para adotar ou cadastrar animais</p>
-    <p id="erroCadastro"    class="erro    hidden"></p>
-    <p id="sucessoCadastro" class="sucesso hidden"></p>
-    <label style="text-align:left;display:block;font-size:13px;margin-bottom:4px;color:#7A6555;">Você é:</label>
-    <select id="tipoUsuario">
-        <option value="">Selecione</option>
-        <option value="ong">ONG</option>
-        <option value="adotante">Adotante</option>
-    </select>
-    <div id="camposCadastro" class="hidden">
-        <input type="text"     placeholder="Nome"                           id="cadNome">
-        <input type="email"    placeholder="Email"                          id="cadEmail">
-        <input type="text"     placeholder="Endereço"                       id="cadEndereco">
-        <input type="text"     placeholder="Telefone (somente números)"     id="cadTelefone" maxlength="11">
-        <input type="password" placeholder="Senha"                          id="cadSenha">
-        <button id="btnCadastrar">Cadastrar</button>
+<div class="page-centered">
+    <div class="container">
+        <div class="container-logo">Ygg<span>drasil</span></div>
+        <p class="container-sub">Crie sua conta para adotar ou cadastrar animais</p>
+        <p id="erroCadastro"    class="erro    hidden"></p>
+        <p id="sucessoCadastro" class="sucesso hidden"></p>
+        <label style="text-align:left;display:block;font-size:13px;margin-bottom:4px;color:#7A6555;font-weight:600;">Você é:</label>
+        <select id="tipoUsuario">
+            <option value="">Selecione</option>
+            <option value="ong">ONG</option>
+            <option value="adotante">Adotante</option>
+        </select>
+        <div id="camposCadastro" class="hidden">
+            <input type="text"     placeholder="Nome"                          id="cadNome">
+            <input type="email"    placeholder="Email"                         id="cadEmail">
+            <input type="text"     placeholder="Endereço"                      id="cadEndereco">
+            <input type="text"     placeholder="Telefone (somente números)"    id="cadTelefone" maxlength="11">
+            <input type="password" placeholder="Senha"                         id="cadSenha">
+            <button class="btn-verde" id="btnCadastrar" style="width:100%;margin-top:12px;padding:12px;font-size:15px;">Cadastrar</button>
+        </div>
+        <p class="cadastro-texto">Já tem conta? <a href="index.html" class="btn-link">Faça login</a></p>
     </div>
-    <p class="cadastro-texto">Já tem conta? <a href="index.html" class="btn-link">Faça login</a></p>
 </div>
 <script src="../js/dados.js"></script>
 <script src="../js/cadastro.js"></script>
