@@ -1,15 +1,20 @@
 /**
- * dados.js — Yggdrasil · fonte central de dados + persistência localStorage
+ * dados.js — Yggdrasil · fonte central de dados
  *
- * Para imagens: frontend/assets/animais/<arquivo>
+ * Estratégia de persistência:
+ *   - Arrays em MEMÓRIA (USUARIOS_MEM, ANIMAIS_MEM) são a fonte de verdade durante a sessão.
+ *   - Ao carregar a página, os extras do localStorage são mesclados aos dados base.
+ *   - Novos cadastros ficam em memória E vão para o localStorage (para sobreviver a recargas).
+ *   - Isso garante que animal/usuário cadastrado aparece imediatamente na mesma janela.
  */
 
-const USUARIOS_BASE = [
+// ─── DADOS BASE ───────────────────────────────────────────────
+const _USUARIOS_BASE = [
     { id:1, tipo:'ong',      nome:'Abrigo Esperança', email:'contato@esperanca.org', endereco:'Rua das Flores, 120 — Belo Horizonte, MG', telefone:'3132345678',  senha:'123456', foto_url:null },
     { id:2, tipo:'adotante', nome:'Maria Silva',       email:'maria@email.com',       endereco:'Av. Brasil, 500 — Contagem, MG',           telefone:'31987654321', senha:'123456', foto_url:null },
 ];
 
-const ANIMAIS_BASE = [
+const _ANIMAIS_BASE = [
     // ══ CAO — filhotes ══
     { id:1,  nome:'Pingo',   especie:'cao', raca:'SRD',           data_nascimento:'2025-11-10', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Pingo é esperto e cheio de energia. Aprende comandos rápido e adora brincar com crianças. Já vacinado.', foto_url:'../assets/animais/pingo.jpeg' },
     { id:2,  nome:'Mel',     especie:'cao', raca:'Beagle',        data_nascimento:'2026-01-20', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Mel é curiosa e brincalhona. Ama farejar tudo. Ótima para famílias ativas com espaço.', foto_url:'../assets/animais/mel.png' },
@@ -57,7 +62,7 @@ const ANIMAIS_BASE = [
     // ══ ROEDOR — idosos ══
     { id:34, nome:'Vovô',    especie:'roedor', raca:'Porquinho-da-índia', data_nascimento:'2018-03-22', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:'Maloclusão leve. Dieta com vegetais macios.', descricao:'Vovô é calmo e acostumado ao toque humano. Companheiro quieto e fácil.', foto_url:'../assets/animais/vovo.jpg' },
     { id:35, nome:'Mel R',   especie:'roedor', raca:'Chinchila',          data_nascimento:'2016-11-08', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Mel ainda está ativa. Adora banho de areia. Espécie longeva — compromisso de longo prazo.', foto_url:'../assets/animais/mel-r.jpg' },
-    { id:36, nome:'Faísca',  especie:'roedor', raca:'Gerbil',            data_nascimento:'2017-05-17', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Faísca ainda explora com curiosidade. Tranquila e fácil de manusear.', foto_url:'../assets/animais/faisca.jpeg' },
+    { id:36, nome:'Faísca',  especie:'roedor', raca:'Gerbil',             data_nascimento:'2017-05-17', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Faísca ainda explora com curiosidade. Tranquila e fácil de manusear.', foto_url:'../assets/animais/faisca.jpeg' },
     // ══ RÉPTIL — filhotes ══
     { id:37, nome:'Spike',   especie:'reptil', raca:'Dragão Barbudo',  data_nascimento:'2025-11-20', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Spike é ativo e já acostumado ao manuseio. Requer terrário aquecido com luz UVB.', foto_url:'../assets/animais/spike.jpg' },
     { id:38, nome:'Jade',    especie:'reptil', raca:'Iguana Verde',    data_nascimento:'2026-01-11', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Jade ainda é pequena mas já mostra temperamento curioso. Herbívora, cresce bastante.', foto_url:'../assets/animais/jade.jpg' },
@@ -84,91 +89,126 @@ const ANIMAIS_BASE = [
     { id:54, nome:'Poseidon',especie:'outro', raca:'Peixe Betta',      data_nascimento:'2015-01-01', status:'disponivel', ong_id:1, ong_nome:'Abrigo Esperança', enfermidade:null, descricao:'Poseidon tem cores vibrantes e nada graciosamente. Aquário aquecido e água limpa.', foto_url:'../assets/animais/poseidon.jpg' },
 ];
 
-// ─── PERSISTÊNCIA ────────────────────────────────────────────
-function _carregarUsuarios() {
-    return [...USUARIOS_BASE, ...JSON.parse(localStorage.getItem('usuarios_extras')||'[]')];
-}
-function _salvarUsuarioExtra(u) {
-    const e = JSON.parse(localStorage.getItem('usuarios_extras')||'[]');
-    e.push(u); localStorage.setItem('usuarios_extras', JSON.stringify(e));
-}
-function _atualizarUsuario(id, dados) {
-    const e = JSON.parse(localStorage.getItem('usuarios_extras')||'[]');
-    const idx = e.findIndex(u=>u.id===id);
-    if (idx!==-1) { Object.assign(e[idx],dados); localStorage.setItem('usuarios_extras',JSON.stringify(e)); return; }
-    const ov = JSON.parse(localStorage.getItem('usuarios_overrides')||'{}');
-    ov[id] = {...(ov[id]||{}), ...dados}; localStorage.setItem('usuarios_overrides',JSON.stringify(ov));
-}
-function _carregarAnimais() {
-    const extras = JSON.parse(localStorage.getItem('animais_extras')||'[]');
-    const ov = JSON.parse(localStorage.getItem('animais_overrides')||'{}');
-    const base = ANIMAIS_BASE.map(a => ov[a.id] ? {...a,...ov[a.id]} : a);
-    return [...base, ...extras];
-}
-function _salvarAnimalExtra(a) {
-    const e = JSON.parse(localStorage.getItem('animais_extras')||'[]');
-    e.push(a); localStorage.setItem('animais_extras', JSON.stringify(e));
+// ─── ARRAYS EM MEMÓRIA (fonte de verdade durante a sessão) ────
+// Inicializa mesclando base + extras do localStorage
+const USUARIOS_MEM = [
+    ..._USUARIOS_BASE,
+    ...JSON.parse(localStorage.getItem('usuarios_extras') || '[]'),
+];
+const ANIMAIS_MEM = [
+    ..._ANIMAIS_BASE,
+    ...JSON.parse(localStorage.getItem('animais_extras') || '[]'),
+];
+
+// Overrides de campos individuais (ex: foto de perfil)
+const _USER_OV = JSON.parse(localStorage.getItem('usuarios_overrides') || '{}');
+
+// ─── HELPERS INTERNOS ─────────────────────────────────────────
+function _usuarioComOv(u) {
+    return _USER_OV[u.id] ? { ...u, ..._USER_OV[u.id] } : u;
 }
 
 // ─── API PÚBLICA ─────────────────────────────────────────────
+
 function calcularFaixaEtaria(d) {
     if (!d) return null;
-    const m = (new Date() - new Date(d)) / (1000*60*60*24*30.44);
-    return m<12 ? 'filhote' : m<96 ? 'adulto' : 'idoso';
+    const m = (new Date() - new Date(d)) / (1000 * 60 * 60 * 24 * 30.44);
+    return m < 12 ? 'filhote' : m < 96 ? 'adulto' : 'idoso';
 }
-function getAnimais(filtros={}) {
-    let lista = _carregarAnimais().map(a=>({...a, faixa_etaria:calcularFaixaEtaria(a.data_nascimento)}));
-    if (filtros.especie) lista = lista.filter(a=>a.especie===filtros.especie);
-    if (filtros.status)  lista = lista.filter(a=>a.status===filtros.status);
+
+// ANIMAIS
+function getAnimais(filtros = {}) {
+    let lista = ANIMAIS_MEM.map(a => ({ ...a, faixa_etaria: calcularFaixaEtaria(a.data_nascimento) }));
+    if (filtros.especie) lista = lista.filter(a => a.especie === filtros.especie);
+    if (filtros.status)  lista = lista.filter(a => a.status  === filtros.status);
     return lista;
 }
+
 function getAnimalById(id) {
-    const a = _carregarAnimais().find(a=>a.id===Number(id));
-    return a ? {...a, faixa_etaria:calcularFaixaEtaria(a.data_nascimento)} : null;
+    const a = ANIMAIS_MEM.find(a => a.id === Number(id));
+    return a ? { ...a, faixa_etaria: calcularFaixaEtaria(a.data_nascimento) } : null;
 }
+
 function cadastrarAnimal(dados) {
-    const novo = {...dados, id:Date.now(), status:'disponivel'};
-    _salvarAnimalExtra(novo); return novo;
+    const novo = { ...dados, id: Date.now(), status: 'disponivel' };
+    // Adiciona em memória (aparece imediatamente na mesma janela)
+    ANIMAIS_MEM.push(novo);
+    // Salva no localStorage (persiste se recarregar)
+    const extras = JSON.parse(localStorage.getItem('animais_extras') || '[]');
+    extras.push(novo);
+    localStorage.setItem('animais_extras', JSON.stringify(extras));
+    return novo;
 }
+
+// USUÁRIOS
 function getUsuarioByEmail(email) {
-    const ov = JSON.parse(localStorage.getItem('usuarios_overrides')||'{}');
-    const u = _carregarUsuarios().find(u=>u.email===email);
-    return u ? (ov[u.id] ? {...u,...ov[u.id]} : u) : null;
+    const u = USUARIOS_MEM.find(u => u.email === email);
+    return u ? _usuarioComOv(u) : null;
 }
+
 function getUsuarioById(id) {
-    const ov = JSON.parse(localStorage.getItem('usuarios_overrides')||'{}');
-    const u = _carregarUsuarios().find(u=>u.id===Number(id));
-    return u ? (ov[u.id] ? {...u,...ov[u.id]} : u) : null;
+    const u = USUARIOS_MEM.find(u => u.id === Number(id));
+    return u ? _usuarioComOv(u) : null;
 }
+
 function cadastrarUsuario(dados) {
     if (getUsuarioByEmail(dados.email)) return null;
-    const novo = {...dados, id:Date.now()};
-    _salvarUsuarioExtra(novo); return novo;
+    const novo = { ...dados, id: Date.now() };
+    // Memória
+    USUARIOS_MEM.push(novo);
+    // localStorage
+    const extras = JSON.parse(localStorage.getItem('usuarios_extras') || '[]');
+    extras.push(novo);
+    localStorage.setItem('usuarios_extras', JSON.stringify(extras));
+    return novo;
 }
+
+function _atualizarUsuario(id, dados) {
+    // Atualiza em memória
+    const idx = USUARIOS_MEM.findIndex(u => u.id === id);
+    if (idx !== -1) Object.assign(USUARIOS_MEM[idx], dados);
+    // Persiste override
+    _USER_OV[id] = { ...(_USER_OV[id] || {}), ...dados };
+    localStorage.setItem('usuarios_overrides', JSON.stringify(_USER_OV));
+}
+
+// SESSÃO
 function getSession() {
     const raw = localStorage.getItem('sessao');
     if (!raw) return null;
     const base = JSON.parse(raw);
-    const atualizado = getUsuarioById(base.id);
-    return atualizado ? {...atualizado, senha:undefined} : base;
+    // Relê do array em memória para ter dados atualizados
+    const atual = getUsuarioById(base.id);
+    return atual ? { ...atual, senha: undefined } : base;
 }
+
 function setSession(u) {
-    const {senha:_,...sem}=u; localStorage.setItem('sessao',JSON.stringify(sem));
+    const { senha: _, ...sem } = u;
+    localStorage.setItem('sessao', JSON.stringify(sem));
 }
+
 function updateSession(id, dados) {
     _atualizarUsuario(id, dados);
     const raw = localStorage.getItem('sessao');
-    if (raw) localStorage.setItem('sessao', JSON.stringify({...JSON.parse(raw),...dados}));
+    if (raw) localStorage.setItem('sessao', JSON.stringify({ ...JSON.parse(raw), ...dados }));
 }
+
 function clearSession() {
     localStorage.removeItem('sessao');
     localStorage.removeItem('interesses');
 }
-function getInteresses() { return JSON.parse(localStorage.getItem('interesses')||'[]'); }
+
+// INTERESSES
+function getInteresses() {
+    return JSON.parse(localStorage.getItem('interesses') || '[]');
+}
+
 function registrarInteresse(animalId) {
-    const sess = getSession(); if (!sess) return false;
+    const sess = getSession();
+    if (!sess) return false;
     const lista = getInteresses();
-    if (lista.find(i=>i.usuario_id===sess.id&&i.animal_id===animalId)) return false;
-    lista.push({usuario_id:sess.id, animal_id:animalId, criado_em:new Date().toISOString()});
-    localStorage.setItem('interesses',JSON.stringify(lista)); return true;
+    if (lista.find(i => i.usuario_id === sess.id && i.animal_id === animalId)) return false;
+    lista.push({ usuario_id: sess.id, animal_id: animalId, criado_em: new Date().toISOString() });
+    localStorage.setItem('interesses', JSON.stringify(lista));
+    return true;
 }
